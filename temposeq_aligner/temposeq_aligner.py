@@ -153,7 +153,7 @@ def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, cu
 
 
 
-def append_to_df(append_to, df, filename = None):
+def append_to_df(append_to, df, aligner, filename = None):
     # If append first column to df is empty
     if append_to.shape == (0,0):
         # append first row
@@ -166,12 +166,19 @@ def append_to_df(append_to, df, filename = None):
     # Get Df with cols of interest
     df = df[cols].copy()
     # If filename is not specified capture it from the DF last col
-    if filename == None:
+    if aligner == 'star':
         # Make mapping dict to rename cols (remove all that from last col name)
         rename_cols = {x:x.removesuffix('Aligned.sortedByCoord.out.bam') for x in cols}
         #remap col names
         df = df.rename(columns=rename_cols)
-    else:
+    elif aligner == 'bwa':
+        # Rename columns! -> Given that columns are named as full path of bam file (ex /home/gioele/rat_fasta/cli/temp_first/alignment.bam)
+        # Get new name from string.split('/')[-2].removeprefix('temp_') it 
+        change_col = df.columns[-1]
+        rename_cols = {change_col: change_col.split('/')[-2].removeprefix('temp_')}
+        df = df.rename(columns=rename_cols)
+        
+    elif aligner == 'kalisto':
         # This is specific to kallisto
         # Cast col to integer (was float)
         df.est_counts = df.est_counts.astype(int)
@@ -252,12 +259,12 @@ def run_aligner(aligner, reference_genome, input_directory, output_name, input_z
             #remove last col + change first col name to Geneid
             df = df.iloc[:,:-1]
             df = df.rename(columns={'target_id': 'Geneid'})
-            append_to = append_to_df(append_to, df, dir.removeprefix('temp_')) 
+            append_to = append_to_df(append_to, df, aligner, dir.removeprefix('temp_')) 
             # Kallisto produces files differently from featureCount, so you need to adapt them to be the same
             # Append to function takes in a name to call the column, which is the temporary name without prefix
         else:
             df = pd.read_csv(f'{current_directory}/{dir}/read_count.txt', delimiter='\t', skiprows=[0]) # Skip first row
-            append_to = append_to_df(append_to, df)
+            append_to = append_to_df(append_to, df, aligner)
 
     #Write created df to file
     outstring = f'{current_directory}/{output_name}_count_table.csv'
