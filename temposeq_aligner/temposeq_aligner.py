@@ -5,7 +5,7 @@ import argparse
 
 
 # Perform alignment with aligner STAR
-def align_star(filename, reference_index, threads, zipped, temp_dir_list, current_directory):
+def align_star(filename, reference_index, threads, zipped, temp_dir_list, current_directory, mismatches):
     # Get temporary name to make a directory (filename without extension)
     temp_name = filename.split('.')[0]
     # how is the temporary directory called
@@ -33,7 +33,7 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, curren
         filename = f'{temp_name}.fastq'
 
     # Run STAR alignment
-    subprocess.Popen(f'STAR --genomeDir {current_directory}/{temp_dir}/ --readFilesIn {filename} --runThreadN {threads} --outSAMtype BAM SortedByCoordinate --scoreDelOpen -10000 --scoreInsOpen -10000 --outFilterMultimapNmax 1 --outFilterMismatchNmax 2 --outSAMunmapped Within --outFileNamePrefix {temp_name}' , shell=True).wait()
+    subprocess.Popen(f'STAR --genomeDir {current_directory}/{temp_dir}/ --readFilesIn {filename} --runThreadN {threads} --outSAMtype BAM SortedByCoordinate --scoreDelOpen -10000 --scoreInsOpen -10000 --outFilterMultimapNmax 1 --outFilterMismatchNmax {mismatches} --outSAMunmapped Within --outFileNamePrefix {temp_name}' , shell=True).wait()
     
     print('Alignment complete for file ', filename)
 
@@ -185,7 +185,7 @@ def append_to_df(append_to, df, filename = None):
 
 
 
-def run_aligner(aligner, reference_genome, input_directory, output_name, input_zipped=None, threads=8):
+def run_aligner(aligner, reference_genome, input_directory, output_name, input_zipped=None, threads=8, specific_files=None, mismatches=2):
 
     # Capture reference genome path (in kevin)
     index_reference_dict = {
@@ -209,13 +209,18 @@ def run_aligner(aligner, reference_genome, input_directory, output_name, input_z
     # Capture environment variables:
     # !!! if you move this getcwd, change the align() fn to exit the temporary directory every time as this will change otherwise and nest directories into each others 
     current_directory = input_directory or os.getcwd()
-    file_list = os.listdir(current_directory)
-
-    # Get the list of files in the directory (either .gz if zipped or .fastq if not zipped!)
-    expected_extension = 'gz' if zipped else 'fastq'
-    # Get the file list to process discriminating based on extension
-    file_list = [file for file in file_list if file.split('.')[-1] == expected_extension]
     
+    #If the user does not specify the files to include in the analysis, make an analysis on all of them
+    if specific_files == None:
+        file_list = os.listdir(current_directory)
+        # Get the list of files in the directory (either .gz if zipped or .fastq if not zipped!)
+        expected_extension = 'gz' if zipped else 'fastq'
+        # Get the file list to process discriminating based on extension
+        file_list = [file for file in file_list if file.split('.')[-1] == expected_extension]
+    else:
+        # Split the specific files by comma to get the list
+        file_list = [x for x in specific_files.split(',')]
+
     print('The following files will be included in the analysis: ', ', '.join(file_list))
 
     # Declare the temporary directories list
@@ -223,7 +228,7 @@ def run_aligner(aligner, reference_genome, input_directory, output_name, input_z
     # For each file run alignment
     if aligner == 'star':
         for file in file_list:
-            temp_dir_list = align_star(file, reference_index, threads, zipped, temp_dir_list, current_directory)
+            temp_dir_list = align_star(file, reference_index, threads, zipped, temp_dir_list, current_directory, mismatches)
     elif aligner == 'bwa':
         for file in file_list:
             temp_dir_list = align_bwa(file, reference_index, threads, zipped, temp_dir_list, current_directory)
@@ -280,7 +285,9 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output-name', required=True, help='Prefix for output name')
     parser.add_argument('-t', '--threads', required=False, help='Number of thread used, default: 8')
     parser.add_argument('-u', '--unzipped', required=False, action='store_false', help='The input files are unzipped, default: False, default expexted extension .fastq.gz')
-    
+    parser.add_argument('-s', '--specific-files', required=False, help='Comma separated list of files to include in the analysis. They HAVE to be in the input directory. (Eg file1.fastq,file2.fastq,file3.fastq,...)')
+    parser.add_argument('-m', '--mismatches', required=False, type=int, help='Select number of allowed mismatches (only applicable on STAR). Default: 2.')
+
     args = vars(parser.parse_args())
     input_directory = args['input_directory']
     aligner = args['aligner']
@@ -288,11 +295,14 @@ if __name__ == '__main__':
     output_name = args['output_name']
     threads = args['threads'] or 8
     input_zipped = args['unzipped']
+    specific_files = args['specific_files']
+    mismatches = args['mismatches'] or 2
+    print(specific_files)
 
     if input_directory == '.':
         input_directory = os.getcwd()
     
-    print(f'Options: input directory {input_directory}, aligner {aligner}, reference genome {reference_genome}, output name {output_name}, threads {threads}, input zipped {input_zipped}')
-    run_aligner(aligner, reference_genome, input_directory, output_name, input_zipped=input_zipped, threads=threads)
+    print(f'Options: input directory {input_directory}, aligner {aligner}, reference genome {reference_genome}, output name {output_name}, threads {threads}, input zipped {input_zipped}, specific files {specific_files}, mismatches {mismatches} (only applied to STAR)')
+    run_aligner(aligner, reference_genome, input_directory, output_name, input_zipped=input_zipped, threads=threads, specific_files=specific_files, mismatches=mismatches)
 
 
