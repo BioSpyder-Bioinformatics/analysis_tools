@@ -177,8 +177,8 @@ def append_to_df(append_to, df, aligner, filename = None):
         change_col = df.columns[-1]
         rename_cols = {change_col: change_col.split('/')[-2].removeprefix('temp_')}
         df = df.rename(columns=rename_cols)
-        
-    elif aligner == 'kalisto':
+
+    elif aligner == 'kallisto':
         # This is specific to kallisto
         # Cast col to integer (was float)
         df.est_counts = df.est_counts.astype(int)
