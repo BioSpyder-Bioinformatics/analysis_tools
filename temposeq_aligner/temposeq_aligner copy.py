@@ -4,7 +4,7 @@ import pandas as pd
 import argparse
 
 
-# Perform alignment with aligner STAR
+# Perform alignment with aligner STAR
 def align_star(filename, reference_index, threads, zipped, temp_dir_list, current_directory, mismatches):
     # Get temporary name to make a directory (filename without extension)
     temp_name = filename.split('.')[0]
@@ -304,6 +304,7 @@ if __name__ == '__main__':
     input_zipped = args['unzipped']
     specific_files = args['specific_files']
     mismatches = args['mismatches'] or 2
+    print(specific_files)
 
     if input_directory == '.':
         input_directory = os.getcwd()
