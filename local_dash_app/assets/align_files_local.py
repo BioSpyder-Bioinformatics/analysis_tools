@@ -3,12 +3,19 @@ import subprocess
 import pandas as pd
 #For sending email
 import smtplib
+import datetime
 
 
 
 
 
-
+def get_make_gtf_dir():
+    # Find makeGtf script's dir from this script's directory (which is the same!)
+    # Get path of this file
+    this_file = os.path.realpath(__file__)
+    # From file path get relative directory
+    make_gtf_dir = this_file.removesuffix(os.path.basename(this_file))
+    return make_gtf_dir
 
 
 # Get a list of all the temporary files that get made
@@ -37,8 +44,10 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_
     # Move into temporary directory
     os.chdir(fr'{output_directory}/{temp_dir}')
     
+    gtf_dir = get_make_gtf_dir()
+
     # Make GTF reference (script is in the folder alignment_scripts in gio's home)
-    subprocess.Popen(f'python /home/gioele/alignment_scripts/makeGtf.py "{reference_index}" > input.gtf', shell=True).wait()
+    subprocess.Popen(f'python {gtf_dir}makeGtf.py "{reference_index}" > input.gtf', shell=True).wait()
 
     # Make Hash Table
     subprocess.Popen(f'STAR --runMode genomeGenerate --runThreadN {threads} --genomeDir "{output_directory}/{temp_dir}/" --genomeFastaFiles "{reference_index}" --genomeSAindexNbases 4 --sjdbGTFfile input.gtf --sjdbGTFfeatureExon exon', shell=True).wait()
@@ -49,7 +58,7 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_
 
     # Expand file with zcat if zipped
     if zipped:
-        subprocess.Popen(f'zcat "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
+        subprocess.Popen(f'gunzip -c "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
         filename = f'{temp_name}.fastq'
 
     subprocess.Popen(f'STAR --genomeDir "{output_directory}/{temp_dir}/" --readFilesIn {filename} --runThreadN {threads} --outSAMtype BAM SortedByCoordinate --scoreDelOpen -10000 --scoreInsOpen -10000 --outFilterMultimapNmax 1 --outFilterMismatchNmax {mismatches} --outSAMunmapped Within --outFileNamePrefix {temp_name}' , shell=True).wait()
@@ -99,16 +108,18 @@ def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_d
 
     # Move into temporary directory
     os.chdir(fr'{output_directory}/{temp_dir}')
+
+    gtf_dir = get_make_gtf_dir()
     
     # Make GTF reference (script is in the folder alignment_scripts in gio's home)
-    subprocess.Popen(f'python /home/gioele/alignment_scripts/makeGtf.py "{reference_index}" > "{output_directory}/{temp_dir}/"input.gtf', shell=True).wait()
+    subprocess.Popen(f'python {gtf_dir}makeGtf.py "{reference_index}" > "{output_directory}/{temp_dir}/"input.gtf', shell=True).wait()
 
     #make bwa index
     subprocess.Popen(f'bwa index "{reference_index}"', shell=True).wait()
 
     # Expand file with zcat if zipped
     if zipped:
-        subprocess.Popen(f'zcat "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
+        subprocess.Popen(f'gunzip -c "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
         filename = f'{temp_name}.fastq'
 
     # Align with BWA
@@ -165,7 +176,7 @@ def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, in
 
     # Expand file with zcat if zipped
     if zipped:
-        subprocess.Popen(f'zcat "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
+        subprocess.Popen(f'gunzip -c "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
         filename = f'{temp_name}.fastq'
 
     # Run kallisto quantifier
@@ -174,6 +185,7 @@ def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, in
     # Remove everything but read_count.txt
     # Get file list
     file_list = os.listdir()
+    print(file_list)
     #Remove abundance.tsv from file list
     file_list.remove('abundance.tsv')
 
@@ -229,7 +241,67 @@ def append_to_df(append_to, df, aligner, filename = None):
 
 
 
-def run_aligner(aligner, reference_index, input_directory, file_list, output_name, output_directory, threads=8, mismatches = 2):
+# need to: 
+# get the total number of reads: zcat filename | wc -l  /4 -> bc 1 read every 4 lines 
+# reads mapped: sum number of reads in count table
+# unmapped: total - mapped
+# percentage mapped mapped/total * 100#
+# Need main file and read_count.txt
+def get_report(input_directory, file_list, current_temp_dir, output_directory, append_to):
+    # Get the total number of reads
+    # from the file list, understand complete filename based on current temp dir
+    print('starting')
+    my_file = ''
+    for file in file_list:
+        if current_temp_dir.removeprefix('temp_') == file.split('.')[0]:
+            my_file = file
+            break
+    if my_file == '':
+        # append to df a col with values 0
+        rows = [0,0,0,0]
+        df = pd.DataFrame(rows, columns=['File_not_found'])
+        append_to[col] = df[col]
+
+        return append_to # need to modify this to let the user know something went wrong
+    
+    stdout = subprocess.check_output(f'gunzip -c {input_directory}/{my_file} | wc -l', shell=True, encoding='utf-8')
+    total_number_of_reads = int(int(stdout)/4)
+
+    # Get the total number of reads in the count table (will be the ones mapped)
+    # The directory is the output directory, the column is the current temp directory without temp_
+    col = current_temp_dir.removeprefix('temp_')
+    count_table = pd.read_csv(f'{output_directory}/{output_directory.split("/")[-1]}_count_table.csv')
+    aligned_count = int(count_table[col].sum())
+
+
+    # Get the number of unaligned reads
+    unaligned_count = total_number_of_reads - aligned_count
+
+    
+    # Get percentage
+    try:
+        percentage_aligned = round((aligned_count / total_number_of_reads)*100, 2)
+    except:
+        # If it didnt calculate it's bc of division by 0, just assign 0 to it
+        percentage_aligned = 0
+    #print(total_number_of_reads, aligned_count, unaligned_count, percentage_aligned, append_to)
+    # JUST NEED TO COMPILE INTO DF AND MERGE TO INCOMING DF, REMEMBER TO CHECK IF DF IS EMPTY TO PUT FIRST Col IN
+    
+    # Make Df
+    rows = [unaligned_count, aligned_count, total_number_of_reads, percentage_aligned]
+    df = pd.DataFrame(rows, columns=[col])
+
+    append_to[col] = df[col]
+
+    return append_to
+
+
+
+
+
+
+
+def run_aligner(aligner, reference_index, input_directory, file_list, output_name, output_directory, threads=8, mismatches = 2, comments=''):
     # User choices
     # reference_index
     # file_list
@@ -240,6 +312,11 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     print('The following files will be included in the analysis: ', ', '.join(file_list))
 
     temp_output_directory = f'{output_directory}/{output_name}'
+
+    # If output directory is not present, make it
+    if not os.path.isdir(output_directory):
+        os.mkdir(output_directory)
+
 
     temp_dir_list = []
     # For each file run alignment
@@ -282,13 +359,18 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     if not os.path.exists(output_directory):
         os.mkdir(fr'{output_directory}')
 
+    # Make directory specific to this experiment (named as the experiment)
+    # This becomes the new output directory
+    if not os.path.exists(fr'{output_directory}/{output_name}'):
+        os.mkdir(fr'{output_directory}/{output_name}')
+    output_directory = fr'{output_directory}/{output_name}'
     
     #Write created df to file !!!!!!!!!!!!!!! IF YOU WANT YOU CAN MAKE DIRECTORIES SPECIFIC TO THE OUTPUT NAME, MAYBE BEST
     outstring = f'{output_directory}/{output_name}_count_table.csv'
     append_to.to_csv(outstring, index=False)
 
 
-    # Move file to desired directory
+    # Move file to desired directory (NOT anymore)
     #subprocess.Popen(f'mv {outstring} {output_directory}', shell=True).wait()  
 
     print('Wrote count table to ', output_directory)
@@ -297,6 +379,9 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     # Iterate through the folders and get the run stats!
     # Run stats = total reads, total reads mapped, total reads unmapped, percentage of mapped reads
     # For each temp folder
+    # Declare df
+    rows = ['Unmapped', 'Mapped', 'TotalReads', 'PercentMapped']
+    mapped_unmapped = pd.DataFrame(rows, columns=[''])
     for dir in temp_dir_list:
         # need to: 
         # get the total number of reads: zcat filename | wc -l  /4 -> bc 1 read every 4 lines 
@@ -304,15 +389,11 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
         # unmapped: total - mapped
         # percentage mapped mapped/total * 100#
         # Need main file and read_count.txt
-
-        pass
-
+        mapped_unmapped = get_report(input_directory, file_list, dir, output_directory, mapped_unmapped)
 
 
-
-
-
-
+    mapped_unmapped_outstring = outstring = f'{output_directory}/{output_name}_mapped_unmapped.csv'
+    mapped_unmapped.to_csv(mapped_unmapped_outstring, index=False)
 
     # Move out of the file-specific temp folders and go to general analysis temp folder
     os.chdir(fr'{temp_output_directory}')
@@ -324,14 +405,33 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
         subprocess.Popen(f'rmdir {temp_output_directory}/{dir}/', shell=True).wait()
         print('Removed temporary directory ', dir)
     
-    # Remove main temp folder (to do so move one level above)
-    print('Removing main temporary directory')
-    os.chdir(fr'{output_directory}')
-    subprocess.Popen(f'rmdir "{temp_output_directory}"', shell=True).wait()#throws error even if required 
+    # Remove main temp folder (to do so move one level above) (not done anymore as needed it for all output files)
+    # print('Removing main temporary directory')
+    # os.chdir(fr'{output_directory}')
+    # subprocess.Popen(f'rmdir "{temp_output_directory}"', shell=True).wait()
+
+    date = datetime.datetime.today().strftime('%Y-%m-%d')
+
+    print('Writing report')
+    report_string = f"""Alignment report
+File prefix: {output_name},
+Output directory: {output_directory},
+Experiment of reference: {input_directory},
+Reference genome: {reference_index},
+Aligner: {aligner},
+N of aligned files: {len(file_list)},
+List of files: {', '.join(file_list)},
+Date: {date},
+Additional comments: {comments if comments != '' else 'None'}
+"""
+
+    # Write out log file
+    with open(f'{output_directory}/{output_name}_run_log.txt', 'w') as outfile:
+        outfile.write(report_string)
 
     print('Processes completed')
 
-
+        
 
 if __name__ == '__main__':
     # # Reference index path
@@ -349,6 +449,12 @@ if __name__ == '__main__':
     # #run_aligner(aligner, reference_genome, input_directory, output_name)
     # #send_email('gioelemook97@gmail.com')
 
+
+
+
+
+
+
     import argparse
 
     parser = argparse.ArgumentParser(description="Tool to align your TempoSeq sequences and extract a feature count table. It allows to alignment with star, bwa and kallisto. Version specific for TempoPortal")
@@ -360,6 +466,8 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--output-dir', required=True, help='Directory where redirect output')
     parser.add_argument('-t', '--threads', required=False, help='Number of thread used, default: 8')
     parser.add_argument('-m', '--mismatches', required=False, type=int, help='Select number of allowed mismatches (only applicable on STAR). Default: 2.')
+    parser.add_argument('-c', '--comments', required=False, help='Any additional comment')
+
 
     args = vars(parser.parse_args())
     input_directory = args['input_directory']
@@ -375,12 +483,21 @@ if __name__ == '__main__':
     threads = args['threads'] or 8
     mismatches = args['mismatches'] or 2
 
-    if input_directory == '.':
-        input_directory = os.getcwd()
-    
+    comments = args['comments'] or ''
+
+
+
+
+
+
     #print(f'Options: input directory {input_directory}, aligner {aligner}, reference genome {reference_genome}, output name {output_name}, threads {threads}, input zipped {input_zipped}, specific files {specific_files}, mismatches {mismatches} (only applied to STAR)')
     
     # python align_files_server.py -a {aligner} -g {genome} -i {complete_directory} -f {','.join(file_list)} -o {output_name} -d {output_directory} -e {email} -t {threads} -m {mismatches}
 
-    run_aligner(aligner, reference_genome, input_directory, file_list, output_name, output_directory, threads, mismatches)
+    # rows = ['Unmapped', 'Mapped', 'TotalReads', 'PercentMapped']
+    # mapped_unmapped = pd.DataFrame(rows, columns=[''])
+
+    # get_report('/home/gioele/tempo_portal_temp/users/gio/raw_reads/BIOS3030', ['first.fastq.gz'], 'temp_first', '/home/gioele/tempo_portal_temp/aligned/BIOS3030/to_study', mapped_unmapped)
+
+    run_aligner(aligner, reference_genome, input_directory, file_list, output_name, output_directory, threads, mismatches, comments)
     #[aligner, genome, complete_directory, selected, output_name, output_directory, email, threads, mismatches]

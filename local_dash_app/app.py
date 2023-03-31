@@ -4,7 +4,40 @@ import os
 import pandas as pd
 from assets.align_files_local import run_aligner
 import subprocess
+import multiprocessing
 from assets.components import *
+
+# Helper functions
+def get_reference_list():
+    #this_dir = os.getcwd()
+    # Get path of this file
+    this_file = os.path.realpath(__file__)
+    # From file path get relative directory
+    this_dir = this_file.removesuffix(os.path.basename(this_file)) # removes this filename from path
+    files = os.listdir(fr'{this_dir}assets/references/')
+    files = [file.removesuffix('.fa').removeprefix('TempO-Seq_') for file in files if file.split('.')[-1] == 'fa']
+    return files
+
+def get_path_from_reference(reference):
+    # Get path of this file
+    this_file = os.path.realpath(__file__)
+    # From file path get relative directory
+    this_dir = this_file.removesuffix('app.py')
+    return_path = fr'{this_dir}assets/references/TempO-Seq_{reference}.fa'
+    return return_path
+
+
+# Helper functions
+def get_local_files_path():
+    #this_dir = os.getcwd()
+    # Get path of this file
+    this_file = os.path.realpath(__file__)
+    # From file path get relative directory
+    this_dir = this_file.removesuffix(os.path.basename(this_file)) # removes this filename from path
+    directory = fr'{this_dir}my_reads/'
+    return directory
+
+
 
 dash_app = dash.Dash(__name__, prevent_initial_callbacks=True,)
 
@@ -20,27 +53,31 @@ dash_app = dash.Dash(__name__, prevent_initial_callbacks=True,)
 # Set stylesheets
 dash_app.config.external_stylesheets = ['./dash_assets/style/base_style.css', './dash_assets/style/additional_style.css']
 
-references_directory =  '/Users/Gioele/home/gioele/tempo_portal_temp/references' 
-raw_reads_directory = '/Users/Gioele/home/gioele/tempo_portal_temp/users/gio/raw_reads' 
-aligned_complete_directory = '/Users/Gioele/home/gioele/tempo_portal_temp/users/gio/aligned' 
+raw_reads_directory = get_local_files_path()
+aligned_complete_directory = raw_reads_directory + 'aligned/'
 
+# Make aligned folder if not already present 
+if not os.path.isdir(aligned_complete_directory):
+    os.mkdir(aligned_complete_directory)
+
+
+# Find directories with fastqfiles
 try:
-    directories = os.listdir(raw_reads_directory) 
+    directories = os.listdir(raw_reads_directory)
+    directories.remove('aligned') 
 except:
     directories = ['No directories found', 'Please contact support']
 
-# Reference genome
-try:
-    #get all files from reference folder
-    references = os.listdir(references_directory) 
-    # Keep only files with fa extension
-    references = [x for x in references if x.split('.')[-1] == 'fa']
-    references = {x: x.removesuffix('.fa').removeprefix('TempO-Seq_') for x in references}
-except:
-    references = ['We could not find any!']
+
+references = get_reference_list()
 
 # Declare aligners options
 aligners = {'star':'STAR', 'bwa': 'BWA', 'kallisto':'Kallisto'}
+
+# Get number of processors
+processors = multiprocessing.cpu_count()
+# Threads are now up to available-2
+threads = [x for x in range(1, processors-2)]
 
 
 # dash_app layout
@@ -124,7 +161,7 @@ dash_app.layout = html.Div([
                                 # Threads
                                 genericInputWrapper([
                                     'Please select the number of threads: ',
-                                    dcc.Dropdown([2, 4, 6, 8],
+                                    dcc.Dropdown(threads,
                                     id='dropdown_aligner_number_threads',
                                     style={'width': '20rem'},
                                     value=8
@@ -272,7 +309,8 @@ def select_deselect(clicks, selection, data):
     prevent_initial_call=True
 )
 def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, selection, files, directory, comments):
-
+    genome = get_path_from_reference(genome)
+    print(clicks, genome, aligner, mismatches, threads, output_name, selection, directory, comments)
     # Missing - input_directory, output_name, zipped?, specific files?
     
     # Check which compulsory fields are missing (genome, aligner, files)
@@ -281,8 +319,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     # Check for genome
     if genome == None:
         missing.append('Genome')
-    else: # Add complete path
-        genome = f'{references_directory}/{genome}'
+    
 
     # Check if aligner is selected
     if aligner == None:
@@ -292,7 +329,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     if directory == None:
         missing.append('Directory')
     else:# Add complete path
-        complete_directory = f'{raw_reads_directory}/{directory}'
+        complete_directory = f'{raw_reads_directory}{directory}'
 
     # get files
     selected = []
@@ -328,7 +365,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     threads = threads or 2
 
     #feed a directory where to move the files once done 
-    output_directory = f'{aligned_complete_directory}/{directory}'
+    output_directory = f'{aligned_complete_directory}{directory}'
 
     ###run_aligner(aligner, reference_index, current_directory, file_list, output_name, email=None, threads=8, mismatches = 2):
     # run_aligner(aligner, genome, directory, selected, output_name, email, threads, mismatches)
@@ -337,7 +374,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     #threading.Thread(target=run_aligner, args=[aligner, genome, complete_directory, selected, output_name, output_directory, email, threads, mismatches]).start()
     
     script_path = os.path.abspath(os.getcwd() + '/assets/' )
-    print(f'python {script_path}/align_files_server.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}')
+    print(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}')
 
     #subprocess.Popen(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}', shell=True)
 
