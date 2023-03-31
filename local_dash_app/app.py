@@ -9,6 +9,14 @@ from assets.components import *
 dash_app = dash.Dash(__name__, prevent_initial_callbacks=True,)
 
 
+# Need to: prompt them to select a folder
+# Only give them so many reference genomes, can look from local app!
+# Number of threads = max number of threads of their computer -1
+# Remove email
+# Give option to select output folder (tick mark if same as input)
+
+
+
 # Set stylesheets
 dash_app.config.external_stylesheets = ['./dash_assets/style/base_style.css', './dash_assets/style/additional_style.css']
 
@@ -129,15 +137,14 @@ dash_app.layout = html.Div([
                                     id='output_name_aligner', 
                                     style={'width': '25rem'})
                                 ]),
-                                # Email
-                                # Text input for email
                                 genericInputWrapper([
-                                    'Get notified when your alignment is complete: ',
-                                    dcc.Input(placeholder='Your Email',
-                                    id='input_aligner_enter_email', type='email',
-                                    style={'width': '25rem'}
-                                )
-                                ])   
+                                    'Additional comments: ',
+                                    dcc.Input(
+                                        placeholder='Comments',
+                                        id='aligner_additional_comments',
+                                        style={'width': '95%'}
+                                    )
+                                ]) 
 
 
                         ], className='six columns flexer'
@@ -258,13 +265,13 @@ def select_deselect(clicks, selection, data):
     State('dropdown_aligner_allowed_mismatches', 'value'),
     State('dropdown_aligner_number_threads', 'value'),
     State('output_name_aligner', 'value'),
-    State('input_aligner_enter_email', 'value'),
     State('pick_file_data_table', 'selected_rows'),
     State('pick_file_data_table', 'data'),
     State('dropdown_pick_folder_aligner', 'value'),
+    State('aligner_additional_comments', 'value'),
     prevent_initial_call=True
 )
-def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, email, selection, files, directory):
+def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, selection, files, directory, comments):
 
     # Missing - input_directory, output_name, zipped?, specific files?
     
@@ -309,9 +316,6 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, e
         if os.path.exists(f'{aligned_complete_directory}/{directory}/{output_name}'):
             return genericInputWrapper('An alignment with the same name is currently running, please choose a different output name to avoid overwriting', className='warning')
 
-    #check email
-    if email == None:
-        missing.append('Email')
 
     # If any of the compulsory fields is missing, let the user know!
     if len(missing) > 0:
@@ -333,17 +337,16 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, e
     #threading.Thread(target=run_aligner, args=[aligner, genome, complete_directory, selected, output_name, output_directory, email, threads, mismatches]).start()
     
     script_path = os.path.abspath(os.getcwd() + '/assets/' )
-    print(f'python {script_path}/align_files_server.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -e {email} -t {threads} -m {mismatches}')
+    print(f'python {script_path}/align_files_server.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}')
 
-    subprocess.Popen(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}', shell=True)
+    #subprocess.Popen(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}', shell=True)
 
     return_string = f"""Your alignment started with the following parameters:
     - Aligner: {aligner}
     - Genome: {genome} 
     - Selected directory: {complete_directory}
     - Number of selected files: {len(selected)}
-    - Output prefix: {output_name}
-    An email will be sent to the following email on completion: {email if email else 'No email selected'}"""
+    - Output prefix: {output_name}"""
 
     return genericInputWrapper(return_string)
 
