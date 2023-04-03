@@ -369,7 +369,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
         if os.path.exists(f'{aligned_complete_directory}/{directory}/{output_name}_count_table.csv'):
             return genericInputWrapper('Please choose a different output name to avoid overwriting', className='warning')
         if os.path.exists(f'{aligned_complete_directory}/{directory}/{output_name}'):
-            return genericInputWrapper('An alignment with the same name is currently running, please choose a different output name to avoid overwriting', className='warning')
+            return genericInputWrapper('An alignment with the same name is currently present, please choose a different output name to avoid overwriting', className='warning')
 
 
     # If any of the compulsory fields is missing, let the user know!
@@ -394,7 +394,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     script_path = os.path.abspath(os.getcwd() + '/assets/' )
     print(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}')
 
-    #subprocess.Popen(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}', shell=True)
+    subprocess.Popen(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}', shell=True)
 
     return_string = f"""Your alignment started with the following parameters:
     - Aligner: {aligner}
@@ -421,7 +421,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
 
 # Run dash_app
 if __name__ == '__main__':
-    dash_app.run_server(port=3000, debug=True) 
+    dash_app.run_server(port=3000)#, debug=True) 
 
 
 
