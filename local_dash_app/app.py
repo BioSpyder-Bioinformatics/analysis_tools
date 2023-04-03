@@ -164,7 +164,7 @@ dash_app.layout = html.Div([
                                     dcc.Dropdown(threads,
                                     id='dropdown_aligner_number_threads',
                                     style={'width': '20rem'},
-                                    value=8
+                                    value=threads[int(len(threads)/2)]
                                     )
                                 ]),
                                 # Output name
@@ -290,6 +290,24 @@ def select_deselect(clicks, selection, data):
         return [x for x in range(len(data))] 
 
 
+# Limit number of processors with star
+@callback(
+    Output('dropdown_aligner_number_threads', 'options'),
+    Output('dropdown_aligner_number_threads', 'value'),
+    Input('dropdown_aligner_aligner_software', 'value')
+)
+def determine_n_processors(aligner):
+    # Get number of processors
+    processors = multiprocessing.cpu_count()
+    
+    if aligner == 'star':
+        threads = [x for x in range(1, int((processors-2)/2))]
+        pre_select = threads[int(len(threads)/2)]
+        return threads, pre_select
+
+    threads = [x for x in range(1, processors-2)]
+    pre_select = threads[int(len(threads)/2)]
+    return threads, pre_select
 
 
 
@@ -404,3 +422,15 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
 # Run dash_app
 if __name__ == '__main__':
     dash_app.run_server(port=3000, debug=True) 
+
+
+
+
+
+
+
+
+
+
+
+# NEED TO FIX THE PATH FOR STAR AND BWA, THEY CRASH WHEN HANDLING BAM FILE!!!
