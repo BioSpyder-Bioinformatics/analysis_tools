@@ -1,0 +1,10 @@
+Alignment report
+File prefix: star_try,
+Output directory: /Users/Gioele/Desktop/work-github/analysis_tools/local_dash_app/my_reads/aligned/BIOS3333/star_try,
+Experiment of reference: /Users/Gioele/Desktop/work-github/analysis_tools/local_dash_app/my_reads/BIOS3333,
+Reference genome: /Users/Gioele/Desktop/work-github/analysis_tools/local_dash_app/assets/references/TempO-Seq_Rat_Whole_Transcriptome_1.0.fa,
+Aligner: star,
+N of aligned files: 1,
+List of files: rat_DMF_hi_RPH_6_S54_L002_R1_001.fastq.gz,
+Date: 2023-04-03,
+Additional comments: None
