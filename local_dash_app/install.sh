@@ -51,6 +51,25 @@ fi
 rm condaList
 
 
+# Install featureCount (subread)
+# Make a list of installed packages
+./source/conda/bin/conda list > condaList
+if grep -Fq subread condaList; then
+    echo "featureCount is already installed"
+else
+    echo "Installing featureCount...."
+    ./source/conda/bin/conda install -c bioconda -y subread >> ./source/installation.log
+
+    # Check if it was installed
+    ./source/conda/bin/conda list > condaList
+    if grep -Fq subread condaList; then
+        echo "featureCount was installed successfully"
+    else
+        echo "Something went wrong while installing featureCount. Please check installation.log for details."
+    fi
+fi
+rm condaList
+
 # Install STAR
 # Make a list of installed packages
 ./source/conda/bin/conda list > condaList
@@ -61,6 +80,59 @@ if grep -Fq star condaList; then
 else
     echo "Installing STAR"
     ./source/conda/bin/conda install -c bioconda -y star >> ./source/installation.log
+    
+    # Check if installed successfully
+    ./source/conda/bin/conda list > condaList
+    if grep -Fq star condaList; then
+        echo "STAR was installed successfully"
+    else
+        echo "Something went wrong while installing STAR. Please check installation.log for details."
+    fi
+fi
+rm condaList
+
+
+# Install BWA
+./source/conda/bin/conda list > condaList
+echo ""
+echo "Checking BWA"
+if grep -Fq bwa condaList; then
+    echo "BWA is already installed"
+else
+    echo "Installing BWA"
+    ./source/conda/bin/conda install -c bioconda -y bwa >> ./source/installation.log
+    
+    # Check if installed successfully
+    ./source/conda/bin/conda list > condaList
+    if grep -Fq bwa condaList; then
+        echo "BWA was installed successfully"
+    else
+        echo "Something went wrong while installing BWA. Please check installation.log for details."
+    fi
+fi
+rm condaList
+
+
+
+# Install Kallisto
+./source/conda/bin/conda list > condaList
+echo ""
+echo "Checking Kallisto"
+if grep -Fq kallisto condaList; then
+    echo "Kallisto is already installed"
+else
+    echo "Installing Kallisto"
+    ./source/conda/bin/conda install -c bioconda -y kallisto >> ./source/installation.log
+    
+    # Check if installed successfully
+    ./source/conda/bin/conda list > condaList
+    if grep -Fq kallisto condaList; then
+        echo "Kallisto was installed successfully"
+    else
+        echo "Something went wrong while installing Kallisto. Please check installation.log for details."
+    fi
+fi
+rm condaList
 
 
 
