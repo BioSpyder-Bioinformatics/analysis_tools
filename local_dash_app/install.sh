@@ -1,6 +1,10 @@
 # Determine installation path and install conda there
 installationPath=$(pwd)
 
+# NEED TO ADD THE PATH TO CONDA INTERPRETER IN ALIGN FILES LOCAL, NOT SURE IF PASSED BY APP.PY OR STRAIGHT IN THERE
+# Possibly need to modify conda script or iteratively run sed 
+# sed -i -e 's/\r$//' filename
+
 # Make installation log file
 touch ./source/installation.log
 
