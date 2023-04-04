@@ -47,7 +47,7 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_
     gtf_dir = get_make_gtf_dir()
 
     # Make GTF reference (script is in the folder alignment_scripts in gio's home)
-    subprocess.Popen(f'python {gtf_dir}makeGtf.py "{reference_index}" > input.gtf', shell=True).wait()
+    subprocess.Popen(f'python "{gtf_dir}makeGtf.py" "{reference_index}" > input.gtf', shell=True).wait()
 
     # Make Hash Table
     subprocess.Popen(f'STAR --runMode genomeGenerate --runThreadN {threads} --genomeDir "{output_directory}/{temp_dir}/" --genomeFastaFiles "{reference_index}" --genomeSAindexNbases 4 --sjdbGTFfile input.gtf --sjdbGTFfeatureExon exon', shell=True).wait()
@@ -112,7 +112,7 @@ def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_d
     gtf_dir = get_make_gtf_dir()
     
     # Make GTF reference (script is in the folder alignment_scripts in gio's home)
-    subprocess.Popen(f'python {gtf_dir}makeGtf.py "{reference_index}" > "{output_directory}/{temp_dir}/"input.gtf', shell=True).wait()
+    subprocess.Popen(f'python "{gtf_dir}makeGtf.py" "{reference_index}" > "{output_directory}/{temp_dir}/"input.gtf', shell=True).wait()
 
     #make bwa index
     subprocess.Popen(f'bwa index "{reference_index}"', shell=True).wait()
@@ -264,13 +264,13 @@ def get_report(input_directory, file_list, current_temp_dir, output_directory, a
 
         return append_to # need to modify this to let the user know something went wrong
     
-    stdout = subprocess.check_output(f'gunzip -c {input_directory}/{my_file} | wc -l', shell=True, encoding='utf-8')
+    stdout = subprocess.check_output(fr'gunzip -c "{input_directory}/{my_file}" | wc -l', shell=True, encoding='utf-8')
     total_number_of_reads = int(int(stdout)/4)
 
     # Get the total number of reads in the count table (will be the ones mapped)
     # The directory is the output directory, the column is the current temp directory without temp_
     col = current_temp_dir.removeprefix('temp_')
-    count_table = pd.read_csv(f'{output_directory}/{output_directory.split("/")[-1]}_count_table.csv')
+    count_table = pd.read_csv(fr'{output_directory}/{output_directory.split("/")[-1]}_count_table.csv')
     aligned_count = int(count_table[col].sum())
 
 
@@ -344,13 +344,13 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     for dir in temp_dir_list:
         # if the aligner is kallisto, no need to skip first row, but need to skip last col
         if aligner == 'kallisto':
-            df = pd.read_csv(f'{temp_output_directory}/{dir}/abundance.tsv', delimiter='\t')
+            df = pd.read_csv(fr'{temp_output_directory}/{dir}/abundance.tsv', delimiter='\t')
             #remove last col + change first col name to Geneid
             df = df.iloc[:,:-1]
             df = df.rename(columns={'target_id': 'Geneid'})
             append_to = append_to_df(append_to, df, aligner, dir.removeprefix('temp_')) # Kallisto produces files differently from featureCount, so you need to adapt them to be the same
         else:
-            df = pd.read_csv(f'{temp_output_directory}/{dir}/read_count.txt', delimiter='\t', skiprows=[0])
+            df = pd.read_csv(fr'{temp_output_directory}/{dir}/read_count.txt', delimiter='\t', skiprows=[0])
             append_to = append_to_df(append_to, df, aligner)
 
 
@@ -366,7 +366,7 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     output_directory = fr'{output_directory}/{output_name}'
     
     #Write created df to file !!!!!!!!!!!!!!! IF YOU WANT YOU CAN MAKE DIRECTORIES SPECIFIC TO THE OUTPUT NAME, MAYBE BEST
-    outstring = f'{output_directory}/{output_name}_count_table.csv'
+    outstring = fr'{output_directory}/{output_name}_count_table.csv'
     append_to.to_csv(outstring, index=False)
 
 
@@ -401,8 +401,8 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     # Remove all file-specific temp folders 
     for dir in temp_dir_list:
         # Do it in 2 steps just in case
-        subprocess.Popen(f'rm {temp_output_directory}/{dir}/{"read_count.txt" if aligner != "kallisto" else "abundance.tsv"}', shell=True).wait()
-        subprocess.Popen(f'rmdir {temp_output_directory}/{dir}/', shell=True).wait()
+        subprocess.Popen(f'rm "{temp_output_directory}/{dir}"/{"read_count.txt" if aligner != "kallisto" else "abundance.tsv"}', shell=True).wait()
+        subprocess.Popen(f'rmdir "{temp_output_directory}"/{dir}/', shell=True).wait()
         print('Removed temporary directory ', dir)
     
     # Remove main temp folder (to do so move one level above) (not done anymore as needed it for all output files)

@@ -394,7 +394,7 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     script_path = os.path.abspath(os.getcwd() + '/assets/' )
     print(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}')
 
-    subprocess.Popen(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}', shell=True)
+    subprocess.Popen(f'python "{script_path}/align_files_local.py" -a {aligner} -g "{genome}" -i "{complete_directory}" -f {",".join(selected)} -o {output_name} -d "{output_directory}" -t {threads} -m {mismatches}', shell=True)
 
     return_string = f"""Your alignment started with the following parameters:
     - Aligner: {aligner}
