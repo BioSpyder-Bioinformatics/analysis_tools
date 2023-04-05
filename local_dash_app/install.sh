@@ -24,7 +24,7 @@ else
     echo "Installing miniconda"
     cd source
     echo $installationPath/conda
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p $installationPath/conda >> installation.log 2>&1
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p $installationPath/conda > installation.log 2>&1
     cd ../
     if test -f $installationPath/conda/bin/conda; then
         echo "Miniconda was installed successfully"
