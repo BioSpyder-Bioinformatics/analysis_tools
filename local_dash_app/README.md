@@ -9,6 +9,9 @@ Guide on installing wsl....
 *Run the install.sh script*
 - Open an instance of WSL terminal. Move to the tool directory eg `cd local_dash_app`.
 - Run the installing script eg `bash install.sh`
+- !!!* If you have a conda environment activated type `conda deactivate` to avoid path crossing between your conda and the one which is being installed ad hoc. If anything went wrong, you can simply run install.sh again.
+- Do checks of troubleshooting section now, this occurs in linux too!
+
 
 *Inspect the installation.log*
 After all the installation steps are completed, make sure all processes run correctly by inspetting the installation.log file inside the source folder. If no error messages are present, the app can be run!
@@ -38,3 +41,6 @@ If no error messages are thrown then you do not need to take any further action.
 If the error message "libncurses.so.5: cannot open shared object file: No such file or directory" is thrown, install the required dependencies typing:
 `sudo apt-get install libncurses5`
 You will be prompted to insert your password. Once complete, try to run the previous command again and everything should be fixed. If not please contact the distributors.
+
+
+! It might happen that if you have a conda environment activated, some of the executables could be picked up from that environment, stopping the local installation process. Please deactivate your conda environment before installing.
