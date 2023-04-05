@@ -2,23 +2,24 @@
 #installationPath=$(pwd)
 installationPath=$HOME/temposeq_aligner_assets
 
-# NEED TO ADD THE PATH TO CONDA INTERPRETER IN ALIGN FILES LOCAL, NOT SURE IF PASSED BY APP.PY OR STRAIGHT IN THERE
-# Possibly need to modify conda script or iteratively run sed 
-# sed -i -e 's/\r$//' filename
 
-# NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED to 
-# Add shebang and executable path on app.py 
-# Make app.py an executable file
-# Make script to run the situation
+# Modify script app.py
+echo "#!$installationPath/conda/bin/python" > webapp 
+echo "executable_path = '$installationPath/conda/bin/'" >> webapp
+cat app.py >> webapp
+chmod +x webapp
 
 
+echo "Script is ready"
 
 # Make installation log file
 touch ./source/installation.log
 
+echo ""
+echo "Checking Conda"
 # Check if conda is already installed
 if test -f "./source/conda/bin/conda"; then
-    echo "Anaconda executable already present"
+    echo "Conda executable already present"
 else
     echo "Installing miniconda"
     cd source
@@ -33,12 +34,10 @@ else
 fi
 
 
-
+echo ""
+echo "Checking Dash and Pandas"
 # Install dash and pandas with conda
 $installationPath/conda/bin/pip install dash pandas >> ./source/installation.log
-echo "Installed dash and pandas"
-echo " "
-
 # Check if pandas and conda are installed correctly
 $installationPath/conda/bin/pip list > pipList
 if grep -Fq "dash" pipList; then
@@ -58,6 +57,8 @@ rm pipList
 
 ### Install Samtools, STAR, BWA, Kallisto, Subread and check they work
 
+echo ""
+echo "Checking Samtools"
 # Start installing samtools
 # Make a list of installed packages
 $installationPath/conda/bin/conda list > condaList
@@ -82,6 +83,8 @@ fi
 rm condaList
 
 
+echo ""
+echo "Checking FeatureCount"
 # Install featureCount (subread)
 # Make a list of installed packages
 $installationPath/conda/bin/conda list > condaList

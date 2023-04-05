@@ -1,3 +1,11 @@
+#!/home/gioele/temposeq_aligner_assets/conda/bin/python
+executable_path = '/home/gioele/temposeq_aligner_assets/conda/bin/'
+#
+
+# #!/home/gioele/temposeq_aligner_assets/conda/bin/python
+# executable_path = '/home/gioele/temposeq_aligner_assets/conda/bin/'
+
+
 import dash
 from dash import Dash, dcc, html, Output, Input, State, callback, dash_table
 import os
