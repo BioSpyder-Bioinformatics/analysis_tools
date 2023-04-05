@@ -17,7 +17,7 @@ After all the installation steps are completed, make sure all processes run corr
 ### Usage
 In order to run the app, you will need a WSL terminal instance and a web browser (Google Chrome is the recommended one to avoid aestethic issues).
 
-In the WSL terminal, move to the tool directory eg `cd local_dash_app`, and simply run `./webapp`. At this point, you should see a message in the WSL terminal saying that the server is running on port 3000. At this point you can open the web browser and go to the address http://127.0.0.1:3000/. 
+In the WSL terminal, move to the tool directory eg `cd local_dash_app`, and simply run `./webapp.py`. At this point, you should see a message in the WSL terminal saying that the server is running on port 3000. At this point you can open the web browser and go to the address http://127.0.0.1:3000/. 
 
 The interface allows you to select a reference genome, the aligner of choice (between STAR, BWA and Kallisto), the number of allowed mismatches (only if using the aligner STAR), the number of threads to be used (STAR has limitations due to memory usage per thread), the output name and the files of interest. 
 
@@ -26,3 +26,15 @@ In order to load the fastq files to be aligned, simply drag a folder with the re
 
 ### Advanced users only
 The webapp creates a directory named temposeq_aligner_assets in your $HOME path. In order to completely remove any trace of the app, you should delete that folder too (it contains all the conda executables)
+
+
+### Troubleshooting
+
+Often, WSL does not have all the packages to handle all of Linux functionalities. This is fine as it saves memory, however some apps have dependencies on those same Linux base packages. Samtools is one of them. 
+*Double check if samtools is working properly by typing in a WSL terminal:*
+`$HOME/temposeq_aligner_assets/conda/bin/samtools`
+If no error messages are thrown then you do not need to take any further action. 
+
+If the error message "libncurses.so.5: cannot open shared object file: No such file or directory" is thrown, install the required dependencies typing:
+`sudo apt-get install libncurses5`
+You will be prompted to insert your password. Once complete, try to run the previous command again and everything should be fixed. If not please contact the distributors.

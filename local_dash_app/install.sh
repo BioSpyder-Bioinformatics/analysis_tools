@@ -4,10 +4,10 @@ installationPath=$HOME/temposeq_aligner_assets
 
 
 # Modify script app.py
-echo "#!$installationPath/conda/bin/python" > webapp 
-echo "executable_path = '$installationPath/conda/bin/'" >> webapp
-cat app.py >> webapp
-chmod +x webapp
+echo "#!$installationPath/conda/bin/python" > webapp.py
+echo "executable_path = '$installationPath/conda/bin/'" >> webapp.py
+cat app.py >> webapp.py
+chmod +x webapp.py
 
 
 echo "Script is ready"
@@ -68,9 +68,9 @@ else
     echo "Installing Samtools...."
     $installationPath/conda/bin/conda install -c bioconda -y samtools >> ./source/installation.log
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this im not sure we do need
-    # cd source/conda/lib/
-    # ln -s librcrypto.so.1.1 libcrypto.so.1.0.0
-    # cd ../../../
+    cd $installationPath/conda/lib/
+    ln -s librcrypto.so.1.1 libcrypto.so.1.0.0
+    cd -
 
     # Check if it was installed
     $installationPath/conda/bin/conda list > condaList

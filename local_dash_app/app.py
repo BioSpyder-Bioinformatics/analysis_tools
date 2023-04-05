@@ -22,7 +22,7 @@ def get_path_from_reference(reference):
     # Get path of this file
     this_file = os.path.realpath(__file__)
     # From file path get relative directory
-    this_dir = this_file.removesuffix('app.py')
+    this_dir = this_file.removesuffix(os.path.basename(this_file))
     return_path = fr'{this_dir}assets/references/TempO-Seq_{reference}.fa'
     return return_path
 

@@ -1,0 +1,377 @@
+PREFIX=/home/gioele/temposeq_aligner_assets/conda
+Unpacking payload ...
+  0%|          | 0/39 [00:00<?, ?it/s]Extracting : ca-certificates-2021.10.26-h06a4308_2.conda:   0%|          | 0/39 [00:00<?, ?it/s]Extracting : ca-certificates-2021.10.26-h06a4308_2.conda:   3%|▎         | 1/39 [00:00<00:10,  3.54it/s]Extracting : brotlipy-0.7.0-py39h27cfd23_1003.conda:   3%|▎         | 1/39 [00:00<00:10,  3.54it/s]     Extracting : pycparser-2.21-pyhd3eb1b0_0.conda:   5%|▌         | 2/39 [00:00<00:10,  3.54it/s]     Extracting : ld_impl_linux-64-2.35.1-h7274673_9.conda:   8%|▊         | 3/39 [00:00<00:10,  3.54it/s]Extracting : cffi-1.15.0-py39hd667e15_1.conda:  10%|█         | 4/39 [00:00<00:09,  3.54it/s]        Extracting : tk-8.6.11-h1ccaba5_0.conda:  13%|█▎        | 5/39 [00:00<00:09,  3.54it/s]      Extracting : six-1.16.0-pyhd3eb1b0_0.conda:  15%|█▌        | 6/39 [00:00<00:09,  3.54it/s]Extracting : conda-content-trust-0.1.1-pyhd3eb1b0_0.conda:  18%|█▊        | 7/39 [00:00<00:09,  3.54it/s]Extracting : libstdcxx-ng-9.3.0-hd4cf53a_17.conda:  21%|██        | 8/39 [00:00<00:08,  3.54it/s]        Extracting : libgomp-9.3.0-h5101ec6_17.conda:  23%|██▎       | 9/39 [00:00<00:08,  3.54it/s]     Extracting : requests-2.27.1-pyhd3eb1b0_0.conda:  26%|██▌       | 10/39 [00:00<00:08,  3.54it/s]Extracting : setuptools-58.0.4-py39h06a4308_0.conda:  28%|██▊       | 11/39 [00:00<00:07,  3.54it/s]Extracting : conda-package-handling-1.7.3-py39h27cfd23_1.conda:  31%|███       | 12/39 [00:00<00:07,  3.54it/s]Extracting : libgcc-ng-9.3.0-h5101ec6_17.conda:  33%|███▎      | 13/39 [00:00<00:07,  3.54it/s]                Extracting : libffi-3.3-he6710b0_2.conda:  36%|███▌      | 14/39 [00:00<00:07,  3.54it/s]      Extracting : readline-8.1.2-h7f8727e_1.conda:  38%|███▊      | 15/39 [00:00<00:06,  3.54it/s]Extracting : ncurses-6.3-h7f8727e_2.conda:  41%|████      | 16/39 [00:00<00:06,  3.54it/s]   Extracting : ncurses-6.3-h7f8727e_2.conda:  44%|████▎     | 17/39 [00:00<00:00, 51.35it/s]Extracting : certifi-2021.10.8-py39h06a4308_2.conda:  44%|████▎     | 17/39 [00:00<00:00, 51.35it/s]Extracting : pycosat-0.6.3-py39h27cfd23_0.conda:  46%|████▌     | 18/39 [00:00<00:00, 51.35it/s]    Extracting : sqlite-3.37.0-hc218d9a_0.conda:  49%|████▊     | 19/39 [00:00<00:00, 51.35it/s]    Extracting : ruamel_yaml-0.15.100-py39h27cfd23_0.conda:  51%|█████▏    | 20/39 [00:00<00:00, 51.35it/s]Extracting : tqdm-4.62.3-pyhd3eb1b0_1.conda:  54%|█████▍    | 21/39 [00:00<00:00, 51.35it/s]           Extracting : pysocks-1.7.1-py39h06a4308_0.conda:  56%|█████▋    | 22/39 [00:00<00:00, 51.35it/s]Extracting : _libgcc_mutex-0.1-main.conda:  59%|█████▉    | 23/39 [00:00<00:00, 51.35it/s]      Extracting : pip-21.2.4-py39h06a4308_0.conda:  62%|██████▏   | 24/39 [00:00<00:00, 51.35it/s]Extracting : pip-21.2.4-py39h06a4308_0.conda:  64%|██████▍   | 25/39 [00:00<00:00, 55.23it/s]Extracting : conda-4.11.0-py39h06a4308_0.conda:  64%|██████▍   | 25/39 [00:00<00:00, 55.23it/s]Extracting : urllib3-1.26.7-pyhd3eb1b0_0.conda:  67%|██████▋   | 26/39 [00:00<00:00, 55.23it/s]Extracting : idna-3.3-pyhd3eb1b0_0.conda:  69%|██████▉   | 27/39 [00:00<00:00, 55.23it/s]      Extracting : charset-normalizer-2.0.4-pyhd3eb1b0_0.conda:  72%|███████▏  | 28/39 [00:00<00:00, 55.23it/s]Extracting : tzdata-2021e-hda174b7_0.conda:  74%|███████▍  | 29/39 [00:00<00:00, 55.23it/s]              Extracting : yaml-0.2.5-h7b6447c_0.conda:  77%|███████▋  | 30/39 [00:00<00:00, 55.23it/s]  Extracting : openssl-1.1.1m-h7f8727e_0.conda:  79%|███████▉  | 31/39 [00:00<00:00, 55.23it/s]Extracting : openssl-1.1.1m-h7f8727e_0.conda:  82%|████████▏ | 32/39 [00:00<00:00, 31.47it/s]Extracting : python-3.9.7-h12debd9_1.conda:  82%|████████▏ | 32/39 [00:01<00:00, 31.47it/s]  Extracting : wheel-0.37.1-pyhd3eb1b0_0.conda:  85%|████████▍ | 33/39 [00:01<00:00, 31.47it/s]Extracting : zlib-1.2.11-h7f8727e_4.conda:  87%|████████▋ | 34/39 [00:01<00:00, 31.47it/s]   Extracting : xz-5.2.5-h7b6447c_0.conda:  90%|████████▉ | 35/39 [00:01<00:00, 31.47it/s]   Extracting : cryptography-36.0.0-py39h9ce1e76_0.conda:  92%|█████████▏| 36/39 [00:01<00:00, 31.47it/s]Extracting : pyopenssl-21.0.0-pyhd3eb1b0_1.conda:  95%|█████████▍| 37/39 [00:01<00:00, 31.47it/s]     Extracting : _openmp_mutex-4.5-1_gnu.tar.bz2:  97%|█████████▋| 38/39 [00:01<00:00, 31.47it/s]                                                                                                 Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/gioele/temposeq_aligner_assets/conda
+
+  added / updated specs:
+    - _libgcc_mutex==0.1=main
+    - _openmp_mutex==4.5=1_gnu
+    - brotlipy==0.7.0=py39h27cfd23_1003
+    - ca-certificates==2021.10.26=h06a4308_2
+    - certifi==2021.10.8=py39h06a4308_2
+    - cffi==1.15.0=py39hd667e15_1
+    - charset-normalizer==2.0.4=pyhd3eb1b0_0
+    - conda-content-trust==0.1.1=pyhd3eb1b0_0
+    - conda-package-handling==1.7.3=py39h27cfd23_1
+    - conda==4.11.0=py39h06a4308_0
+    - cryptography==36.0.0=py39h9ce1e76_0
+    - idna==3.3=pyhd3eb1b0_0
+    - ld_impl_linux-64==2.35.1=h7274673_9
+    - libffi==3.3=he6710b0_2
+    - libgcc-ng==9.3.0=h5101ec6_17
+    - libgomp==9.3.0=h5101ec6_17
+    - libstdcxx-ng==9.3.0=hd4cf53a_17
+    - ncurses==6.3=h7f8727e_2
+    - openssl==1.1.1m=h7f8727e_0
+    - pip==21.2.4=py39h06a4308_0
+    - pycosat==0.6.3=py39h27cfd23_0
+    - pycparser==2.21=pyhd3eb1b0_0
+    - pyopenssl==21.0.0=pyhd3eb1b0_1
+    - pysocks==1.7.1=py39h06a4308_0
+    - python==3.9.7=h12debd9_1
+    - readline==8.1.2=h7f8727e_1
+    - requests==2.27.1=pyhd3eb1b0_0
+    - ruamel_yaml==0.15.100=py39h27cfd23_0
+    - setuptools==58.0.4=py39h06a4308_0
+    - six==1.16.0=pyhd3eb1b0_0
+    - sqlite==3.37.0=hc218d9a_0
+    - tk==8.6.11=h1ccaba5_0
+    - tqdm==4.62.3=pyhd3eb1b0_1
+    - tzdata==2021e=hda174b7_0
+    - urllib3==1.26.7=pyhd3eb1b0_0
+    - wheel==0.37.1=pyhd3eb1b0_0
+    - xz==5.2.5=h7b6447c_0
+    - yaml==0.2.5=h7b6447c_0
+    - zlib==1.2.11=h7f8727e_4
+
+
+The following NEW packages will be INSTALLED:
+
+  _libgcc_mutex      pkgs/main/linux-64::_libgcc_mutex-0.1-main
+  _openmp_mutex      pkgs/main/linux-64::_openmp_mutex-4.5-1_gnu
+  brotlipy           pkgs/main/linux-64::brotlipy-0.7.0-py39h27cfd23_1003
+  ca-certificates    pkgs/main/linux-64::ca-certificates-2021.10.26-h06a4308_2
+  certifi            pkgs/main/linux-64::certifi-2021.10.8-py39h06a4308_2
+  cffi               pkgs/main/linux-64::cffi-1.15.0-py39hd667e15_1
+  charset-normalizer pkgs/main/noarch::charset-normalizer-2.0.4-pyhd3eb1b0_0
+  conda              pkgs/main/linux-64::conda-4.11.0-py39h06a4308_0
+  conda-content-tru~ pkgs/main/noarch::conda-content-trust-0.1.1-pyhd3eb1b0_0
+  conda-package-han~ pkgs/main/linux-64::conda-package-handling-1.7.3-py39h27cfd23_1
+  cryptography       pkgs/main/linux-64::cryptography-36.0.0-py39h9ce1e76_0
+  idna               pkgs/main/noarch::idna-3.3-pyhd3eb1b0_0
+  ld_impl_linux-64   pkgs/main/linux-64::ld_impl_linux-64-2.35.1-h7274673_9
+  libffi             pkgs/main/linux-64::libffi-3.3-he6710b0_2
+  libgcc-ng          pkgs/main/linux-64::libgcc-ng-9.3.0-h5101ec6_17
+  libgomp            pkgs/main/linux-64::libgomp-9.3.0-h5101ec6_17
+  libstdcxx-ng       pkgs/main/linux-64::libstdcxx-ng-9.3.0-hd4cf53a_17
+  ncurses            pkgs/main/linux-64::ncurses-6.3-h7f8727e_2
+  openssl            pkgs/main/linux-64::openssl-1.1.1m-h7f8727e_0
+  pip                pkgs/main/linux-64::pip-21.2.4-py39h06a4308_0
+  pycosat            pkgs/main/linux-64::pycosat-0.6.3-py39h27cfd23_0
+  pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0
+  pyopenssl          pkgs/main/noarch::pyopenssl-21.0.0-pyhd3eb1b0_1
+  pysocks            pkgs/main/linux-64::pysocks-1.7.1-py39h06a4308_0
+  python             pkgs/main/linux-64::python-3.9.7-h12debd9_1
+  readline           pkgs/main/linux-64::readline-8.1.2-h7f8727e_1
+  requests           pkgs/main/noarch::requests-2.27.1-pyhd3eb1b0_0
+  ruamel_yaml        pkgs/main/linux-64::ruamel_yaml-0.15.100-py39h27cfd23_0
+  setuptools         pkgs/main/linux-64::setuptools-58.0.4-py39h06a4308_0
+  six                pkgs/main/noarch::six-1.16.0-pyhd3eb1b0_0
+  sqlite             pkgs/main/linux-64::sqlite-3.37.0-hc218d9a_0
+  tk                 pkgs/main/linux-64::tk-8.6.11-h1ccaba5_0
+  tqdm               pkgs/main/noarch::tqdm-4.62.3-pyhd3eb1b0_1
+  tzdata             pkgs/main/noarch::tzdata-2021e-hda174b7_0
+  urllib3            pkgs/main/noarch::urllib3-1.26.7-pyhd3eb1b0_0
+  wheel              pkgs/main/noarch::wheel-0.37.1-pyhd3eb1b0_0
+  xz                 pkgs/main/linux-64::xz-5.2.5-h7b6447c_0
+  yaml               pkgs/main/linux-64::yaml-0.2.5-h7b6447c_0
+  zlib               pkgs/main/linux-64::zlib-1.2.11-h7f8727e_4
+
+
+Preparing transaction: ...working... done
+Executing transaction: ...working... done
+installation finished.
+Collecting dash
+  Using cached dash-2.9.2-py3-none-any.whl (10.2 MB)
+Collecting pandas
+  Using cached pandas-2.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.4 MB)
+Collecting dash-html-components==2.0.0
+  Using cached dash_html_components-2.0.0-py3-none-any.whl (4.1 kB)
+Collecting dash-table==5.0.0
+  Using cached dash_table-5.0.0-py3-none-any.whl (3.9 kB)
+Collecting dash-core-components==2.0.0
+  Using cached dash_core_components-2.0.0-py3-none-any.whl (3.8 kB)
+Collecting Flask>=1.0.4
+  Using cached Flask-2.2.3-py3-none-any.whl (101 kB)
+Collecting plotly>=5.0.0
+  Using cached plotly-5.14.0-py2.py3-none-any.whl (15.3 MB)
+Collecting python-dateutil>=2.8.2
+  Using cached python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+Collecting numpy>=1.20.3
+  Using cached numpy-1.24.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
+Collecting pytz>=2020.1
+  Using cached pytz-2023.3-py2.py3-none-any.whl (502 kB)
+Collecting tzdata>=2022.1
+  Using cached tzdata-2023.3-py2.py3-none-any.whl (341 kB)
+Collecting importlib-metadata>=3.6.0
+  Using cached importlib_metadata-6.1.0-py3-none-any.whl (21 kB)
+Collecting Werkzeug>=2.2.2
+  Using cached Werkzeug-2.2.3-py3-none-any.whl (233 kB)
+Collecting Jinja2>=3.0
+  Using cached Jinja2-3.1.2-py3-none-any.whl (133 kB)
+Collecting itsdangerous>=2.0
+  Using cached itsdangerous-2.1.2-py3-none-any.whl (15 kB)
+Collecting click>=8.0
+  Using cached click-8.1.3-py3-none-any.whl (96 kB)
+Collecting zipp>=0.5
+  Using cached zipp-3.15.0-py3-none-any.whl (6.8 kB)
+Collecting MarkupSafe>=2.0
+  Using cached MarkupSafe-2.1.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+Collecting packaging
+  Using cached packaging-23.0-py3-none-any.whl (42 kB)
+Collecting tenacity>=6.2.0
+  Using cached tenacity-8.2.2-py3-none-any.whl (24 kB)
+Requirement already satisfied: six>=1.5 in /home/gioele/temposeq_aligner_assets/conda/lib/python3.9/site-packages (from python-dateutil>=2.8.2->pandas) (1.16.0)
+Installing collected packages: zipp, MarkupSafe, Werkzeug, tenacity, packaging, Jinja2, itsdangerous, importlib-metadata, click, tzdata, pytz, python-dateutil, plotly, numpy, Flask, dash-table, dash-html-components, dash-core-components, pandas, dash
+Successfully installed Flask-2.2.3 Jinja2-3.1.2 MarkupSafe-2.1.2 Werkzeug-2.2.3 click-8.1.3 dash-2.9.2 dash-core-components-2.0.0 dash-html-components-2.0.0 dash-table-5.0.0 importlib-metadata-6.1.0 itsdangerous-2.1.2 numpy-1.24.2 packaging-23.0 pandas-2.0.0 plotly-5.14.0 python-dateutil-2.8.2 pytz-2023.3 tenacity-8.2.2 tzdata-2023.3 zipp-3.15.0
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/gioele/temposeq_aligner_assets/conda
+
+  added / updated specs:
+    - samtools
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    ca-certificates-2023.01.10 |       h06a4308_0         120 KB
+    certifi-2022.12.7          |   py39h06a4308_0         150 KB
+    openssl-1.1.1t             |       h7f8727e_0         3.7 MB
+    samtools-1.3.1             |                0         1.5 MB  bioconda
+    ------------------------------------------------------------
+                                           Total:         5.5 MB
+
+The following NEW packages will be INSTALLED:
+
+  samtools           bioconda/linux-64::samtools-1.3.1-0
+
+The following packages will be UPDATED:
+
+  ca-certificates                     2021.10.26-h06a4308_2 --> 2023.01.10-h06a4308_0
+  certifi                          2021.10.8-py39h06a4308_2 --> 2022.12.7-py39h06a4308_0
+  openssl                                 1.1.1m-h7f8727e_0 --> 1.1.1t-h7f8727e_0
+
+
+
+Downloading and Extracting Packages
+openssl-1.1.1t       | 3.7 MB    |            |   0% openssl-1.1.1t       | 3.7 MB    | 6          |   7% openssl-1.1.1t       | 3.7 MB    | #######9   |  80% openssl-1.1.1t       | 3.7 MB    | ########## | 100% 
+ca-certificates-2023 | 120 KB    |            |   0% ca-certificates-2023 | 120 KB    | ########## | 100% ca-certificates-2023 | 120 KB    | ########## | 100% 
+samtools-1.3.1       | 1.5 MB    |            |   0% samtools-1.3.1       | 1.5 MB    | 1          |   1% samtools-1.3.1       | 1.5 MB    | ########8  |  88% samtools-1.3.1       | 1.5 MB    | ########## | 100% 
+certifi-2022.12.7    | 150 KB    |            |   0% certifi-2022.12.7    | 150 KB    | ########## | 100% certifi-2022.12.7    | 150 KB    | ########## | 100% 
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... failed with initial frozen solve. Retrying with flexible solve.
+Solving environment: ...working... failed with repodata from current_repodata.json, will retry with next repodata source.
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/gioele/temposeq_aligner_assets/conda
+
+  added / updated specs:
+    - subread
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    boltons-23.0.0             |   py39h06a4308_0         426 KB
+    conda-23.3.1               |   py39h06a4308_0         959 KB
+    jsonpatch-1.32             |     pyhd3eb1b0_0          15 KB
+    jsonpointer-2.1            |     pyhd3eb1b0_0           9 KB
+    packaging-23.0             |   py39h06a4308_0          68 KB
+    pluggy-1.0.0               |   py39h06a4308_1          28 KB
+    ruamel.yaml-0.16.12        |   py39h27cfd23_1         184 KB
+    ruamel.yaml.clib-0.2.6     |   py39h7f8727e_0         137 KB
+    subread-2.0.1              |       h5bf99c6_1        22.8 MB  bioconda
+    toolz-0.12.0               |   py39h06a4308_0         105 KB
+    ------------------------------------------------------------
+                                           Total:        24.7 MB
+
+The following NEW packages will be INSTALLED:
+
+  boltons            pkgs/main/linux-64::boltons-23.0.0-py39h06a4308_0
+  jsonpatch          pkgs/main/noarch::jsonpatch-1.32-pyhd3eb1b0_0
+  jsonpointer        pkgs/main/noarch::jsonpointer-2.1-pyhd3eb1b0_0
+  packaging          pkgs/main/linux-64::packaging-23.0-py39h06a4308_0
+  pluggy             pkgs/main/linux-64::pluggy-1.0.0-py39h06a4308_1
+  ruamel.yaml        pkgs/main/linux-64::ruamel.yaml-0.16.12-py39h27cfd23_1
+  ruamel.yaml.clib   pkgs/main/linux-64::ruamel.yaml.clib-0.2.6-py39h7f8727e_0
+  subread            bioconda/linux-64::subread-2.0.1-h5bf99c6_1
+  toolz              pkgs/main/linux-64::toolz-0.12.0-py39h06a4308_0
+
+The following packages will be UPDATED:
+
+  conda                               4.11.0-py39h06a4308_0 --> 23.3.1-py39h06a4308_0
+
+
+
+Downloading and Extracting Packages
+jsonpointer-2.1      | 9 KB      |            |   0% jsonpointer-2.1      | 9 KB      | ########## | 100% jsonpointer-2.1      | 9 KB      | ########## | 100% 
+ruamel.yaml.clib-0.2 | 137 KB    |            |   0% ruamel.yaml.clib-0.2 | 137 KB    | ########## | 100% ruamel.yaml.clib-0.2 | 137 KB    | ########## | 100% 
+boltons-23.0.0       | 426 KB    |            |   0% boltons-23.0.0       | 426 KB    | ########## | 100% boltons-23.0.0       | 426 KB    | ########## | 100% 
+subread-2.0.1        | 22.8 MB   |            |   0% subread-2.0.1        | 22.8 MB   |            |   0% subread-2.0.1        | 22.8 MB   | 8          |   8% subread-2.0.1        | 22.8 MB   | #9         |  20% subread-2.0.1        | 22.8 MB   | ##9        |  30% subread-2.0.1        | 22.8 MB   | ###9       |  40% subread-2.0.1        | 22.8 MB   | ####9      |  50% subread-2.0.1        | 22.8 MB   | #####9     |  59% subread-2.0.1        | 22.8 MB   | ######9    |  69% subread-2.0.1        | 22.8 MB   | #######8   |  79% subread-2.0.1        | 22.8 MB   | ########8  |  89% subread-2.0.1        | 22.8 MB   | #########8 |  99% subread-2.0.1        | 22.8 MB   | ########## | 100% 
+pluggy-1.0.0         | 28 KB     |            |   0% pluggy-1.0.0         | 28 KB     | ########## | 100% pluggy-1.0.0         | 28 KB     | ########## | 100% 
+packaging-23.0       | 68 KB     |            |   0% packaging-23.0       | 68 KB     | ########## | 100% packaging-23.0       | 68 KB     | ########## | 100% 
+conda-23.3.1         | 959 KB    |            |   0% conda-23.3.1         | 959 KB    | ########## | 100% conda-23.3.1         | 959 KB    | ########## | 100% 
+ruamel.yaml-0.16.12  | 184 KB    |            |   0% ruamel.yaml-0.16.12  | 184 KB    | ########## | 100% ruamel.yaml-0.16.12  | 184 KB    | ########## | 100% 
+jsonpatch-1.32       | 15 KB     |            |   0% jsonpatch-1.32       | 15 KB     | ########## | 100% jsonpatch-1.32       | 15 KB     | ########## | 100% 
+toolz-0.12.0         | 105 KB    |            |   0% toolz-0.12.0         | 105 KB    | ########## | 100% toolz-0.12.0         | 105 KB    | ########## | 100% 
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/gioele/temposeq_aligner_assets/conda
+
+  added / updated specs:
+    - star
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    star-2.7.10b               |       h9ee0642_0         4.9 MB  bioconda
+    ------------------------------------------------------------
+                                           Total:         4.9 MB
+
+The following NEW packages will be INSTALLED:
+
+  star               bioconda/linux-64::star-2.7.10b-h9ee0642_0 
+
+
+
+Downloading and Extracting Packages
+star-2.7.10b         | 4.9 MB    |            |   0% star-2.7.10b         | 4.9 MB    |            |   0% star-2.7.10b         | 4.9 MB    | ####       |  40% star-2.7.10b         | 4.9 MB    | ########6  |  86% star-2.7.10b         | 4.9 MB    | ########## | 100%                                                      
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/gioele/temposeq_aligner_assets/conda
+
+  added / updated specs:
+    - bwa
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    bwa-0.7.15                 |                1         498 KB  bioconda
+    libgcc-7.2.0               |       h69d50b8_2         269 KB
+    ------------------------------------------------------------
+                                           Total:         766 KB
+
+The following NEW packages will be INSTALLED:
+
+  bwa                bioconda/linux-64::bwa-0.7.15-1 
+  libgcc             pkgs/main/linux-64::libgcc-7.2.0-h69d50b8_2 
+
+
+
+Downloading and Extracting Packages
+libgcc-7.2.0         | 269 KB    |            |   0% 
+bwa-0.7.15           | 498 KB    |            |   0% [Alibgcc-7.2.0         | 269 KB    | 5          |   6% 
+bwa-0.7.15           | 498 KB    | 3          |   3% [Alibgcc-7.2.0         | 269 KB    | ########## | 100% libgcc-7.2.0         | 269 KB    | ########## | 100% 
+bwa-0.7.15           | 498 KB    | ########## | 100% [A
+bwa-0.7.15           | 498 KB    | ########## | 100% [A                                                     
+                                                     [A
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/gioele/temposeq_aligner_assets/conda
+
+  added / updated specs:
+    - kallisto
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    hdf5-1.10.2                |       hba1933b_1         3.8 MB
+    kallisto-0.44.0            |       h7d86c95_2         384 KB  bioconda
+    libgfortran-ng-7.5.0       |      ha8ba4b0_17          22 KB
+    libgfortran4-7.5.0         |      ha8ba4b0_17         995 KB
+    ------------------------------------------------------------
+                                           Total:         5.2 MB
+
+The following NEW packages will be INSTALLED:
+
+  hdf5               pkgs/main/linux-64::hdf5-1.10.2-hba1933b_1 
+  kallisto           bioconda/linux-64::kallisto-0.44.0-h7d86c95_2 
+  libgfortran-ng     pkgs/main/linux-64::libgfortran-ng-7.5.0-ha8ba4b0_17 
+  libgfortran4       pkgs/main/linux-64::libgfortran4-7.5.0-ha8ba4b0_17 
+
+
+
+Downloading and Extracting Packages
+libgfortran4-7.5.0   | 995 KB    |            |   0% 
+hdf5-1.10.2          | 3.8 MB    |            |   0% [A
+
+libgfortran-ng-7.5.0 | 22 KB     |            |   0% [A[A
+
+
+kallisto-0.44.0      | 384 KB    |            |   0% [A[A[A
+
+libgfortran-ng-7.5.0 | 22 KB     | #######2   |  73% [A[Alibgfortran4-7.5.0   | 995 KB    | 1          |   2% 
+
+
+kallisto-0.44.0      | 384 KB    | 4          |   4% [A[A[A
+hdf5-1.10.2          | 3.8 MB    |            |   0% [A
+
+libgfortran-ng-7.5.0 | 22 KB     | ########## | 100% [A[A
+hdf5-1.10.2          | 3.8 MB    | #####2     |  52% [Alibgfortran4-7.5.0   | 995 KB    | ########## | 100% libgfortran4-7.5.0   | 995 KB    | ########## | 100% 
+
+
+kallisto-0.44.0      | 384 KB    | ########## | 100% [A[A[A
+
+
+kallisto-0.44.0      | 384 KB    | ########## | 100% [A[A[A
+hdf5-1.10.2          | 3.8 MB    | ########## | 100% [A
+hdf5-1.10.2          | 3.8 MB    | ########## | 100% [A                                                     
+                                                     [A
+
+                                                     [A[A
+
+
+                                                     [A[A[A
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
