@@ -20,7 +20,7 @@ def get_make_gtf_dir():
 
 # Get a list of all the temporary files that get made
 
-def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_directory, output_directory, mismatches = 2):
+def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_directory, output_directory, mismatches = 2, executables_path=''):
     print('Starting ', filename)
     
     # Get temporary name to make a directory (filename without extension)
@@ -47,10 +47,10 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_
     gtf_dir = get_make_gtf_dir()
 
     # Make GTF reference (script is in the folder alignment_scripts in gio's home)
-    subprocess.Popen(f'python "{gtf_dir}makeGtf.py" "{reference_index}" > input.gtf', shell=True).wait()
+    subprocess.Popen(f'{executables_path}python "{gtf_dir}makeGtf.py" "{reference_index}" > input.gtf', shell=True).wait()
 
     # Make Hash Table
-    subprocess.Popen(f'STAR --runMode genomeGenerate --runThreadN {threads} --genomeDir "{output_directory}/{temp_dir}/" --genomeFastaFiles "{reference_index}" --genomeSAindexNbases 4 --sjdbGTFfile input.gtf --sjdbGTFfeatureExon exon', shell=True).wait()
+    subprocess.Popen(f'{executables_path}STAR --runMode genomeGenerate --runThreadN {threads} --genomeDir "{output_directory}/{temp_dir}/" --genomeFastaFiles "{reference_index}" --genomeSAindexNbases 4 --sjdbGTFfile input.gtf --sjdbGTFfeatureExon exon', shell=True).wait()
 
     # Run STAR alignment
     # This works on normal scripts but not on sh (bc of file flocking, just expanding the file)
@@ -61,13 +61,13 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_
         subprocess.Popen(f'gunzip -c "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"{temp_name}.fastq', shell=True).wait()
         filename = f'{temp_name}.fastq'
 
-    subprocess.Popen(f'STAR --genomeDir "{output_directory}/{temp_dir}/" --readFilesIn {filename} --runThreadN {threads} --outSAMtype BAM SortedByCoordinate --scoreDelOpen -10000 --scoreInsOpen -10000 --outFilterMultimapNmax 1 --outFilterMismatchNmax {mismatches} --outSAMunmapped Within --outFileNamePrefix {temp_name}' , shell=True).wait()
+    subprocess.Popen(f'{executables_path}STAR --genomeDir "{output_directory}/{temp_dir}/" --readFilesIn {filename} --runThreadN {threads} --outSAMtype BAM SortedByCoordinate --scoreDelOpen -10000 --scoreInsOpen -10000 --outFilterMultimapNmax 1 --outFilterMismatchNmax {mismatches} --outSAMunmapped Within --outFileNamePrefix {temp_name}' , shell=True).wait()
     
 
     print('Alignment complete for file ', filename)
 
     # Produce count table
-    subprocess.Popen(f'featureCounts -a input.gtf -o read_count.txt {temp_name}Aligned.sortedByCoord.out.bam', shell=True).wait() 
+    subprocess.Popen(f'{executables_path}featureCounts -a input.gtf -o read_count.txt {temp_name}Aligned.sortedByCoord.out.bam', shell=True).wait() 
     # Last argument indicates the bam file
 
     # Remove everything but read_count.txt
@@ -85,7 +85,7 @@ def align_star(filename, reference_index, threads, zipped, temp_dir_list, input_
     
 
 
-def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_directory, output_directory):
+def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_directory, output_directory, executables_path):
     print('Starting', filename)
 
     # Get temporary name to make a directory (filename without extension)
@@ -112,10 +112,10 @@ def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_d
     gtf_dir = get_make_gtf_dir()
     
     # Make GTF reference (script is in the folder alignment_scripts in gio's home)
-    subprocess.Popen(f'python "{gtf_dir}makeGtf.py" "{reference_index}" > "{output_directory}/{temp_dir}/"input.gtf', shell=True).wait()
+    subprocess.Popen(f'{executables_path}python "{gtf_dir}makeGtf.py" "{reference_index}" > "{output_directory}/{temp_dir}/"input.gtf', shell=True).wait()
 
     #make bwa index
-    subprocess.Popen(f'bwa index "{reference_index}"', shell=True).wait()
+    subprocess.Popen(f'{executables_path}bwa index "{reference_index}"', shell=True).wait()
 
     # Expand file with zcat if zipped
     if zipped:
@@ -123,15 +123,15 @@ def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_d
         filename = f'{temp_name}.fastq'
 
     # Align with BWA
-    subprocess.Popen(f'bwa mem -v 1 -c 2 -L 100 -t {threads} "{reference_index}" "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"alignment.sam', shell=True).wait()
+    subprocess.Popen(f'{executables_path}bwa mem -v 1 -c 2 -L 100 -t {threads} "{reference_index}" "{output_directory}/{temp_dir}/{filename}" > "{output_directory}/{temp_dir}/"alignment.sam', shell=True).wait()
 
     # Convert sam to bam
-    subprocess.Popen(f'samtools view -bS "{output_directory}/{temp_dir}/alignment.sam" > "{output_directory}/{temp_dir}/"alignment.bam', shell=True).wait()
+    subprocess.Popen(f'{executables_path}samtools view -bS "{output_directory}/{temp_dir}/alignment.sam" > "{output_directory}/{temp_dir}/"alignment.bam', shell=True).wait()
 
     print('Alignment complete for file ', filename)
 
     # Run feature counts
-    subprocess.Popen(f'featureCounts -a "{output_directory}/{temp_dir}/input.gtf" -o "{output_directory}/{temp_dir}/"read_count.txt "{output_directory}/{temp_dir}/alignment.bam"', shell=True).wait()
+    subprocess.Popen(f'{executables_path}featureCounts -a "{output_directory}/{temp_dir}/input.gtf" -o "{output_directory}/{temp_dir}/"read_count.txt "{output_directory}/{temp_dir}/alignment.bam"', shell=True).wait()
 
     # Remove everything but read_count.txt
     # Get file list
@@ -147,7 +147,7 @@ def align_bwa(filename, reference_index, threads, zipped, temp_dir_list, input_d
 
 
 
-def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, input_directory, output_directory):
+def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, input_directory, output_directory, executables_path):
     print('Starting', filename)
 
     # Get temporary name to make a directory (filename without extension)
@@ -172,7 +172,7 @@ def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, in
     os.chdir(fr'{output_directory}/{temp_dir}')
 
     #Make kallisto index
-    subprocess.Popen(f'kallisto index -i kallisto.index "{reference_index}"', shell=True).wait()
+    subprocess.Popen(f'{executables_path}kallisto index -i kallisto.index "{reference_index}"', shell=True).wait()
 
     # Expand file with zcat if zipped
     if zipped:
@@ -180,7 +180,7 @@ def align_kallisto(filename, reference_index, threads, zipped, temp_dir_list, in
         filename = f'{temp_name}.fastq'
 
     # Run kallisto quantifier
-    subprocess.Popen(f'kallisto quant --single -i kallisto.index -o "{output_directory}/{temp_dir}" -l 50 -s 1 -t {threads} --bias --single-overhang "{output_directory}/{temp_dir}/"{filename}', shell=True).wait()
+    subprocess.Popen(f'{executables_path}kallisto quant --single -i kallisto.index -o "{output_directory}/{temp_dir}" -l 50 -s 1 -t {threads} --bias --single-overhang "{output_directory}/{temp_dir}/"{filename}', shell=True).wait()
 
     # Remove everything but read_count.txt
     # Get file list
@@ -301,7 +301,7 @@ def get_report(input_directory, file_list, current_temp_dir, output_directory, a
 
 
 
-def run_aligner(aligner, reference_index, input_directory, file_list, output_name, output_directory, threads=8, mismatches = 2, comments=''):
+def run_aligner(aligner, reference_index, input_directory, file_list, output_name, output_directory, threads=8, mismatches = 2, comments='', executables_path=''):
     # User choices
     # reference_index
     # file_list
@@ -323,15 +323,15 @@ def run_aligner(aligner, reference_index, input_directory, file_list, output_nam
     if aligner == 'star':
         for file in file_list:
             zipped = is_zipped(file)
-            temp_dir_list = align_star(file, reference_index, threads, zipped, temp_dir_list, input_directory, temp_output_directory, mismatches=mismatches)
+            temp_dir_list = align_star(file, reference_index, threads, zipped, temp_dir_list, input_directory, temp_output_directory, mismatches, executables_path)
     elif aligner == 'bwa':
         for file in file_list:
             zipped = is_zipped(file)
-            temp_dir_list = align_bwa(file, reference_index, threads, zipped, temp_dir_list, input_directory, temp_output_directory)
+            temp_dir_list = align_bwa(file, reference_index, threads, zipped, temp_dir_list, input_directory, temp_output_directory, executables_path)
     elif aligner == 'kallisto':
         for file in file_list:
             zipped = is_zipped(file)
-            temp_dir_list = align_kallisto(file, reference_index, threads, zipped, temp_dir_list, input_directory, temp_output_directory)
+            temp_dir_list = align_kallisto(file, reference_index, threads, zipped, temp_dir_list, input_directory, temp_output_directory, executables_path)
     else:
         raise Exception('Aligner not recognised')
 
@@ -467,7 +467,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--threads', required=False, help='Number of thread used, default: 8')
     parser.add_argument('-m', '--mismatches', required=False, type=int, help='Select number of allowed mismatches (only applicable on STAR). Default: 2.')
     parser.add_argument('-c', '--comments', required=False, help='Any additional comment')
-
+    parser.add_argument('-e', '--executables-path', required=False, help="Path to aligner's executables. If none, it is assumed they are already in the user's path")
 
     args = vars(parser.parse_args())
     input_directory = args['input_directory']
@@ -484,7 +484,7 @@ if __name__ == '__main__':
     mismatches = args['mismatches'] or 2
 
     comments = args['comments'] or ''
-
+    executables = args['executables_path'] or ''
 
 
 
@@ -499,5 +499,5 @@ if __name__ == '__main__':
 
     # get_report('/home/gioele/tempo_portal_temp/users/gio/raw_reads/BIOS3030', ['first.fastq.gz'], 'temp_first', '/home/gioele/tempo_portal_temp/aligned/BIOS3030/to_study', mapped_unmapped)
 
-    run_aligner(aligner, reference_genome, input_directory, file_list, output_name, output_directory, threads, mismatches, comments)
+    run_aligner(aligner, reference_genome, input_directory, file_list, output_name, output_directory, threads, mismatches, comments, executables)
     #[aligner, genome, complete_directory, selected, output_name, output_directory, email, threads, mismatches]

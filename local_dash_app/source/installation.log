@@ -1,101 +1,0 @@
-mkdir: cannot create directory ‘/conda’: Permission denied
-ERROR: Could not create directory: '/conda'
-mkdir: cannot create directory ‘/conda’: Permission denied
-ERROR: Could not create directory: '/conda'
-PREFIX=/home/gioele/temposeq_aligner_assets/conda
-Unpacking payload ...
-  0%|          | 0/39 [00:00<?, ?it/s]Extracting : ca-certificates-2021.10.26-h06a4308_2.conda:   0%|          | 0/39 [00:00<?, ?it/s]Extracting : ca-certificates-2021.10.26-h06a4308_2.conda:   3%|▎         | 1/39 [00:00<00:05,  7.07it/s]Extracting : brotlipy-0.7.0-py39h27cfd23_1003.conda:   3%|▎         | 1/39 [00:00<00:05,  7.07it/s]     Extracting : pycparser-2.21-pyhd3eb1b0_0.conda:   5%|▌         | 2/39 [00:00<00:05,  7.07it/s]     Extracting : ld_impl_linux-64-2.35.1-h7274673_9.conda:   8%|▊         | 3/39 [00:00<00:05,  7.07it/s]Extracting : cffi-1.15.0-py39hd667e15_1.conda:  10%|█         | 4/39 [00:00<00:04,  7.07it/s]        Extracting : tk-8.6.11-h1ccaba5_0.conda:  13%|█▎        | 5/39 [00:00<00:04,  7.07it/s]      Extracting : six-1.16.0-pyhd3eb1b0_0.conda:  15%|█▌        | 6/39 [00:00<00:04,  7.07it/s]Extracting : conda-content-trust-0.1.1-pyhd3eb1b0_0.conda:  18%|█▊        | 7/39 [00:00<00:04,  7.07it/s]Extracting : libstdcxx-ng-9.3.0-hd4cf53a_17.conda:  21%|██        | 8/39 [00:00<00:04,  7.07it/s]        Extracting : libstdcxx-ng-9.3.0-hd4cf53a_17.conda:  23%|██▎       | 9/39 [00:00<00:00, 32.60it/s]Extracting : libgomp-9.3.0-h5101ec6_17.conda:  23%|██▎       | 9/39 [00:00<00:00, 32.60it/s]     Extracting : requests-2.27.1-pyhd3eb1b0_0.conda:  26%|██▌       | 10/39 [00:00<00:00, 32.60it/s]Extracting : setuptools-58.0.4-py39h06a4308_0.conda:  28%|██▊       | 11/39 [00:00<00:00, 32.60it/s]Extracting : conda-package-handling-1.7.3-py39h27cfd23_1.conda:  31%|███       | 12/39 [00:00<00:00, 32.60it/s]Extracting : libgcc-ng-9.3.0-h5101ec6_17.conda:  33%|███▎      | 13/39 [00:00<00:00, 32.60it/s]                Extracting : libffi-3.3-he6710b0_2.conda:  36%|███▌      | 14/39 [00:00<00:00, 32.60it/s]      Extracting : readline-8.1.2-h7f8727e_1.conda:  38%|███▊      | 15/39 [00:00<00:00, 32.60it/s]Extracting : ncurses-6.3-h7f8727e_2.conda:  41%|████      | 16/39 [00:00<00:00, 32.60it/s]   Extracting : ncurses-6.3-h7f8727e_2.conda:  44%|████▎     | 17/39 [00:00<00:00, 43.24it/s]Extracting : certifi-2021.10.8-py39h06a4308_2.conda:  44%|████▎     | 17/39 [00:00<00:00, 43.24it/s]Extracting : pycosat-0.6.3-py39h27cfd23_0.conda:  46%|████▌     | 18/39 [00:00<00:00, 43.24it/s]    Extracting : sqlite-3.37.0-hc218d9a_0.conda:  49%|████▊     | 19/39 [00:00<00:00, 43.24it/s]    Extracting : ruamel_yaml-0.15.100-py39h27cfd23_0.conda:  51%|█████▏    | 20/39 [00:00<00:00, 43.24it/s]Extracting : tqdm-4.62.3-pyhd3eb1b0_1.conda:  54%|█████▍    | 21/39 [00:00<00:00, 43.24it/s]           Extracting : pysocks-1.7.1-py39h06a4308_0.conda:  56%|█████▋    | 22/39 [00:00<00:00, 43.24it/s]Extracting : _libgcc_mutex-0.1-main.conda:  59%|█████▉    | 23/39 [00:00<00:00, 43.24it/s]      Extracting : pip-21.2.4-py39h06a4308_0.conda:  62%|██████▏   | 24/39 [00:00<00:00, 43.24it/s]Extracting : conda-4.11.0-py39h06a4308_0.conda:  64%|██████▍   | 25/39 [00:00<00:00, 43.24it/s]Extracting : urllib3-1.26.7-pyhd3eb1b0_0.conda:  67%|██████▋   | 26/39 [00:00<00:00, 43.24it/s]Extracting : idna-3.3-pyhd3eb1b0_0.conda:  69%|██████▉   | 27/39 [00:00<00:00, 43.24it/s]      Extracting : charset-normalizer-2.0.4-pyhd3eb1b0_0.conda:  72%|███████▏  | 28/39 [00:00<00:00, 43.24it/s]Extracting : tzdata-2021e-hda174b7_0.conda:  74%|███████▍  | 29/39 [00:00<00:00, 43.24it/s]              Extracting : yaml-0.2.5-h7b6447c_0.conda:  77%|███████▋  | 30/39 [00:00<00:00, 43.24it/s]  Extracting : openssl-1.1.1m-h7f8727e_0.conda:  79%|███████▉  | 31/39 [00:00<00:00, 43.24it/s]Extracting : python-3.9.7-h12debd9_1.conda:  82%|████████▏ | 32/39 [00:00<00:00, 43.24it/s]  Extracting : python-3.9.7-h12debd9_1.conda:  85%|████████▍ | 33/39 [00:00<00:00, 67.62it/s]Extracting : wheel-0.37.1-pyhd3eb1b0_0.conda:  85%|████████▍ | 33/39 [00:00<00:00, 67.62it/s]Extracting : zlib-1.2.11-h7f8727e_4.conda:  87%|████████▋ | 34/39 [00:00<00:00, 67.62it/s]   Extracting : xz-5.2.5-h7b6447c_0.conda:  90%|████████▉ | 35/39 [00:00<00:00, 67.62it/s]   Extracting : cryptography-36.0.0-py39h9ce1e76_0.conda:  92%|█████████▏| 36/39 [00:00<00:00, 67.62it/s]Extracting : pyopenssl-21.0.0-pyhd3eb1b0_1.conda:  95%|█████████▍| 37/39 [00:00<00:00, 67.62it/s]     Extracting : _openmp_mutex-4.5-1_gnu.tar.bz2:  97%|█████████▋| 38/39 [00:00<00:00, 67.62it/s]                                                                                                 Collecting package metadata (current_repodata.json): ...working... done
-Solving environment: ...working... done
-
-## Package Plan ##
-
-  environment location: /home/gioele/temposeq_aligner_assets/conda
-
-  added / updated specs:
-    - _libgcc_mutex==0.1=main
-    - _openmp_mutex==4.5=1_gnu
-    - brotlipy==0.7.0=py39h27cfd23_1003
-    - ca-certificates==2021.10.26=h06a4308_2
-    - certifi==2021.10.8=py39h06a4308_2
-    - cffi==1.15.0=py39hd667e15_1
-    - charset-normalizer==2.0.4=pyhd3eb1b0_0
-    - conda-content-trust==0.1.1=pyhd3eb1b0_0
-    - conda-package-handling==1.7.3=py39h27cfd23_1
-    - conda==4.11.0=py39h06a4308_0
-    - cryptography==36.0.0=py39h9ce1e76_0
-    - idna==3.3=pyhd3eb1b0_0
-    - ld_impl_linux-64==2.35.1=h7274673_9
-    - libffi==3.3=he6710b0_2
-    - libgcc-ng==9.3.0=h5101ec6_17
-    - libgomp==9.3.0=h5101ec6_17
-    - libstdcxx-ng==9.3.0=hd4cf53a_17
-    - ncurses==6.3=h7f8727e_2
-    - openssl==1.1.1m=h7f8727e_0
-    - pip==21.2.4=py39h06a4308_0
-    - pycosat==0.6.3=py39h27cfd23_0
-    - pycparser==2.21=pyhd3eb1b0_0
-    - pyopenssl==21.0.0=pyhd3eb1b0_1
-    - pysocks==1.7.1=py39h06a4308_0
-    - python==3.9.7=h12debd9_1
-    - readline==8.1.2=h7f8727e_1
-    - requests==2.27.1=pyhd3eb1b0_0
-    - ruamel_yaml==0.15.100=py39h27cfd23_0
-    - setuptools==58.0.4=py39h06a4308_0
-    - six==1.16.0=pyhd3eb1b0_0
-    - sqlite==3.37.0=hc218d9a_0
-    - tk==8.6.11=h1ccaba5_0
-    - tqdm==4.62.3=pyhd3eb1b0_1
-    - tzdata==2021e=hda174b7_0
-    - urllib3==1.26.7=pyhd3eb1b0_0
-    - wheel==0.37.1=pyhd3eb1b0_0
-    - xz==5.2.5=h7b6447c_0
-    - yaml==0.2.5=h7b6447c_0
-    - zlib==1.2.11=h7f8727e_4
-
-
-The following NEW packages will be INSTALLED:
-
-  _libgcc_mutex      pkgs/main/linux-64::_libgcc_mutex-0.1-main
-  _openmp_mutex      pkgs/main/linux-64::_openmp_mutex-4.5-1_gnu
-  brotlipy           pkgs/main/linux-64::brotlipy-0.7.0-py39h27cfd23_1003
-  ca-certificates    pkgs/main/linux-64::ca-certificates-2021.10.26-h06a4308_2
-  certifi            pkgs/main/linux-64::certifi-2021.10.8-py39h06a4308_2
-  cffi               pkgs/main/linux-64::cffi-1.15.0-py39hd667e15_1
-  charset-normalizer pkgs/main/noarch::charset-normalizer-2.0.4-pyhd3eb1b0_0
-  conda              pkgs/main/linux-64::conda-4.11.0-py39h06a4308_0
-  conda-content-tru~ pkgs/main/noarch::conda-content-trust-0.1.1-pyhd3eb1b0_0
-  conda-package-han~ pkgs/main/linux-64::conda-package-handling-1.7.3-py39h27cfd23_1
-  cryptography       pkgs/main/linux-64::cryptography-36.0.0-py39h9ce1e76_0
-  idna               pkgs/main/noarch::idna-3.3-pyhd3eb1b0_0
-  ld_impl_linux-64   pkgs/main/linux-64::ld_impl_linux-64-2.35.1-h7274673_9
-  libffi             pkgs/main/linux-64::libffi-3.3-he6710b0_2
-  libgcc-ng          pkgs/main/linux-64::libgcc-ng-9.3.0-h5101ec6_17
-  libgomp            pkgs/main/linux-64::libgomp-9.3.0-h5101ec6_17
-  libstdcxx-ng       pkgs/main/linux-64::libstdcxx-ng-9.3.0-hd4cf53a_17
-  ncurses            pkgs/main/linux-64::ncurses-6.3-h7f8727e_2
-  openssl            pkgs/main/linux-64::openssl-1.1.1m-h7f8727e_0
-  pip                pkgs/main/linux-64::pip-21.2.4-py39h06a4308_0
-  pycosat            pkgs/main/linux-64::pycosat-0.6.3-py39h27cfd23_0
-  pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0
-  pyopenssl          pkgs/main/noarch::pyopenssl-21.0.0-pyhd3eb1b0_1
-  pysocks            pkgs/main/linux-64::pysocks-1.7.1-py39h06a4308_0
-  python             pkgs/main/linux-64::python-3.9.7-h12debd9_1
-  readline           pkgs/main/linux-64::readline-8.1.2-h7f8727e_1
-  requests           pkgs/main/noarch::requests-2.27.1-pyhd3eb1b0_0
-  ruamel_yaml        pkgs/main/linux-64::ruamel_yaml-0.15.100-py39h27cfd23_0
-  setuptools         pkgs/main/linux-64::setuptools-58.0.4-py39h06a4308_0
-  six                pkgs/main/noarch::six-1.16.0-pyhd3eb1b0_0
-  sqlite             pkgs/main/linux-64::sqlite-3.37.0-hc218d9a_0
-  tk                 pkgs/main/linux-64::tk-8.6.11-h1ccaba5_0
-  tqdm               pkgs/main/noarch::tqdm-4.62.3-pyhd3eb1b0_1
-  tzdata             pkgs/main/noarch::tzdata-2021e-hda174b7_0
-  urllib3            pkgs/main/noarch::urllib3-1.26.7-pyhd3eb1b0_0
-  wheel              pkgs/main/noarch::wheel-0.37.1-pyhd3eb1b0_0
-  xz                 pkgs/main/linux-64::xz-5.2.5-h7b6447c_0
-  yaml               pkgs/main/linux-64::yaml-0.2.5-h7b6447c_0
-  zlib               pkgs/main/linux-64::zlib-1.2.11-h7f8727e_4
-
-
-Preparing transaction: ...working... done
-Executing transaction: ...working... done
-installation finished.

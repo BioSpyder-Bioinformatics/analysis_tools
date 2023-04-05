@@ -1,3 +1,7 @@
+#!/home/gioele/temposeq_aligner_assets/conda/bin/python
+executable_path = '/home/gioele/temposeq_aligner_assets/conda/bin/'
+
+
 import dash
 from dash import Dash, dcc, html, Output, Input, State, callback, dash_table
 import os
@@ -392,9 +396,9 @@ def start_alignment(clicks, genome, aligner, mismatches, threads, output_name, s
     #threading.Thread(target=run_aligner, args=[aligner, genome, complete_directory, selected, output_name, output_directory, email, threads, mismatches]).start()
     
     script_path = os.path.abspath(os.getcwd() + '/assets/' )
-    print(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches}')
+    print(f'python {script_path}/align_files_local.py -a {aligner} -g {genome} -i {complete_directory} -f {",".join(selected)} -o {output_name} -d {output_directory} -t {threads} -m {mismatches} -e {executable_path}')
 
-    subprocess.Popen(f'python "{script_path}/align_files_local.py" -a {aligner} -g "{genome}" -i "{complete_directory}" -f {",".join(selected)} -o {output_name} -d "{output_directory}" -t {threads} -m {mismatches}', shell=True)
+    subprocess.Popen(f'{executable_path}python "{script_path}/align_files_local.py" -a {aligner} -g "{genome}" -i "{complete_directory}" -f {",".join(selected)} -o {output_name} -d "{output_directory}" -t {threads} -m {mismatches} -e {executable_path}', shell=True)
 
     return_string = f"""Your alignment started with the following parameters:
     - Aligner: {aligner}

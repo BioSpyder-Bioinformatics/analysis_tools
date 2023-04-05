@@ -6,6 +6,13 @@ installationPath=$HOME/temposeq_aligner_assets
 # Possibly need to modify conda script or iteratively run sed 
 # sed -i -e 's/\r$//' filename
 
+# NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED to 
+# Add shebang and executable path on app.py 
+# Make app.py an executable file
+# Make script to run the situation
+
+
+
 # Make installation log file
 touch ./source/installation.log
 
@@ -26,10 +33,28 @@ else
 fi
 
 
+
 # Install dash and pandas with conda
 $installationPath/conda/bin/pip install dash pandas >> ./source/installation.log
 echo "Installed dash and pandas"
 echo " "
+
+# Check if pandas and conda are installed correctly
+$installationPath/conda/bin/pip list > pipList
+if grep -Fq "dash" pipList; then
+    echo "Dash was installed correctly"
+else
+    echo "Errors installing dash, please refer to log"
+fi
+
+if grep -Fq "pandas" pipList; then
+    echo "Pandas was installed correctly"
+else
+    echo "Errors installing pandas, please refer to log"
+fi
+rm pipList
+
+
 
 ### Install Samtools, STAR, BWA, Kallisto, Subread and check they work
 
