@@ -1,0 +1,8 @@
+General stats 
+	Total counts: 40
+	Total probes with one count: 22
+	Total probes with two counts: 6
+	Total more than two counts: 2
+	Total samples in set: 106
+	Probes not included in the analysis because not found in the count table: None
+

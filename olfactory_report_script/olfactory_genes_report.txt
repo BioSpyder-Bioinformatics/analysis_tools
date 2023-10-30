@@ -1,0 +1,7 @@
+General stats 
+	Total counts: 35
+	Total cells with one count: 22
+	Total cells with two counts: 5
+	Total more than two counts: 0
+	Total samples in set: 106
+

@@ -1,0 +1,7 @@
+For BC1 condition New-293T-new-HsWT_read
+	Total counts: 35
+	Total cells with one count: 22
+	Total cells with two counts: 5
+	Total more than two counts: 0
+	Total cells in set: 106
+
